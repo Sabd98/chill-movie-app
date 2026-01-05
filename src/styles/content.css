@@ -1,0 +1,26 @@
+
+/* === CONTENT SECTIONS === */
+
+.content-sections {
+  background: var(--bg-color);
+  padding: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Special styling for "Melanjutkan Tonton Film" section */
+#continuing-section img {
+  height: 180px !important;
+}
+
+@media (max-width: 768px) {
+  #continuing-section img {
+    height: 140px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #continuing-section img {
+    height: 120px !important;
+  }
+}

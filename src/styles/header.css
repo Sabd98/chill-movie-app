@@ -1,0 +1,151 @@
+/* Header */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #181a1c;
+  transition: all 0.3s ease;
+  padding: 1rem 0;
+}
+
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.logo i {
+  margin-right: 0.5rem;
+  font-size: 2rem;
+}
+
+.nav-link {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-secondary);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease;
+}
+
+.dropdown a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown a svg {
+  margin-right: 0.75rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .nav {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .nav nav {
+    gap: 2rem !important;
+  }
+  
+  .nav-link {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .header {
+    padding: 0.75rem 0;
+  }
+  
+  .nav {
+    height: auto;
+    gap: 0.5rem;
+  }
+  
+  .nav nav {
+    gap: 1rem !important;
+    flex-wrap: wrap;
+  }
+  
+  .nav nav img {
+    width: 80px;
+    height: auto;
+  }
+  
+  .nav-link {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav nav {
+    gap: 0.75rem !important;
+  }
+  
+  .nav nav img {
+    width: 70px;
+  }
+  
+  .nav-link {
+    font-size: 0.8rem;
+  }
+  
+  .dropdown {
+    min-width: 180px;
+    right: -10px;
+  }
+}
