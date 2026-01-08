@@ -74,7 +74,7 @@ const Footer = () => {
         {/* Mobile Accordion Footer */}
         <div className="mobile-footer">
           <div className="mb-4! text-center">
-            <img src="/Logo.png" alt="Logo" className="h-10 mb-4! mx-auto!" />
+            <img src="/Logo.png" alt="Logo" className="h-10 mb-4! mx-auto" />
             <p className="text-[#b3b3b3] text-[0.85rem]">©2023 Chill All Rights Reserved</p>
           </div>
           <div className="footer-mobile-accordion">
