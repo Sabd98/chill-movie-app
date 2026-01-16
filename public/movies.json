@@ -18,26 +18,30 @@
     },
     { "title": "Suzume", "image": "/image11.png", "rating": "4.9/5" },
     { "title": "Big Hero 6", "image": "/image10.png", "rating": "4.4/5" },
-    { "title": "The Batman", "image": "/image22.png", "rating": "4.9/5" },
+    { "title": "The Batman", "image": "/image 22.png", "rating": "4.9/5" },
     { "title": "Rio", "image": "/image 08.png", "rating": "4.0/5" },
     {
       "title": "The Tomorrow War",
       "image": "/image 21.png",
       "rating": "3.8/5"
     },
-    { "title": "Boku no Hero Academia", "image": "/image 31.png", "rating": "4.6/5" }
+    {
+      "title": "Boku no Hero Academia",
+      "image": "/image 31.png",
+      "rating": "4.6/5"
+    }
   ],
   "topRating": [
     {
       "title": "Suzume",
       "image": "/image 219.png",
       "rating": "4.8/5",
-      "badge": { "text": "Episode Baru", "type": "episode" }
+      "badge": { "text": "Top 3", "type": "top" }
     },
     { "title": "Jurassic World", "image": "/Frame 78.png", "rating": "4.7/5" },
     {
       "title": "Blue Lock",
-      "image": "/Frame 76.png",
+      "image": "/image 210.png",
       "rating": "4.6/5",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
@@ -50,6 +54,27 @@
       "title": "Big Hero 6",
       "image": "/Frame 77.png",
       "rating": "4.9/5",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "The Batman",
+      "image": "/Number=8.png",
+      "rating": "4.9/5",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Sonic The Hedgehog 2",
+      "image": "/Frame 76.png",
+      "rating": "4.1/5"
+    },
+    {
+      "title": "Happiness",
+      "image": "/Number=28.png",
+      "rating": "3.8/5"
+    },
+    {
+      "title": "Fast X",
+      "image": "/Number=4.png",
       "badge": { "text": "Top 10", "type": "top" }
     }
   ],
@@ -78,6 +103,30 @@
       "title": "The Little Mermaid",
       "image": "/Frame 74.png",
       "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "image": "/Number=19.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Fast X",
+      "image": "/Number=4.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Black Adam",
+      "image": "/Number=21.png"
+    },
+    {
+      "title": "Shazam Fury of The Gods",
+      "image": "/Number=2.png",
+      "badge": { "text": "Top 15", "type": "top" }
+    },
+    {
+      "title": "Dilan 1991",
+      "image": "/image 232.png",
+      "badge": { "text": "Top 3", "type": "top" }
     }
   ],
   "newRelease": [
@@ -101,6 +150,14 @@
       "image": "/Frame 79.png",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
-    { "title": "Missing", "image": "/image 218.png" }
+    { "title": "Missing", "image": "/image 218.png" },
+    { "title": "Avatar", "image": "/Number=3.png" },
+    { "title": "Baymax", "image": "/Number=26.png" },
+    {
+      "title": "Alice in Borderland",
+      "image": "/image 216.png",
+      "badge": { "text": "Episode Baru", "type": "episode" }
+    },
+    { "title": "Megan", "image": "/image 220.png" }
   ]
 }
