@@ -1,29 +1,106 @@
 {
   "continuing": [
-    { "title": "Blood Shot", "image": "/image 233.png", "rating": "4.5/5" },
-    { "title": "The Batman", "image": "/image 223.png", "rating": "4.7/5" },
+    {
+      "title": "Don't Look at Up",
+      "image": "/image 233.png",
+      "rating": "4.5/5"
+    },
+    {
+      "title": "All of us Are Dead",
+      "image": "/image 223.png",
+      "rating": "4.7/5"
+    },
     { "title": "Blue Lock", "image": "/Blue Lock.png", "rating": "4.6/5" },
-    { "title": "A Man Called Otto", "image": "/image 224.png", "rating": "4.1/5" }
+    {
+      "title": "A Man Called Otto",
+      "image": "/image 224.png",
+      "rating": "4.1/5"
+    },
+    { "title": "Suzume", "image": "/image11.png", "rating": "4.9/5" },
+    { "title": "Big Hero 6", "image": "/image10.png", "rating": "4.4/5" },
+    { "title": "The Batman", "image": "/image22.png", "rating": "4.9/5" },
+    { "title": "Rio", "image": "/image 08.png", "rating": "4.0/5" },
+    {
+      "title": "The Tomorrow War",
+      "image": "/image 21.png",
+      "rating": "3.8/5"
+    },
+    { "title": "Boku no Hero Academia", "image": "/image 31.png", "rating": "4.6/5" }
   ],
   "topRating": [
-    { "title": "Suzume", "image": "/image 219.png", "rating": "4.8/5", "badge": { "text": "Episode Baru", "type": "episode" } },
+    {
+      "title": "Suzume",
+      "image": "/image 219.png",
+      "rating": "4.8/5",
+      "badge": { "text": "Episode Baru", "type": "episode" }
+    },
     { "title": "Jurassic World", "image": "/Frame 78.png", "rating": "4.7/5" },
-    { "title": "Blue Lock", "image": "/Frame 76.png", "rating": "4.6/5", "badge": { "text": "Episode Baru", "type": "episode" } },
-    { "title": "A Man Called Otto", "image": "/image 215.png", "rating": "4.1/5" },
-    { "title": "Big Hero 6", "image": "/Frame 77.png", "rating": "4.9/5", "badge": { "text": "Top 10", "type": "top" } }
+    {
+      "title": "Blue Lock",
+      "image": "/Frame 76.png",
+      "rating": "4.6/5",
+      "badge": { "text": "Episode Baru", "type": "episode" }
+    },
+    {
+      "title": "A Man Called Otto",
+      "image": "/image 215.png",
+      "rating": "4.1/5"
+    },
+    {
+      "title": "Big Hero 6",
+      "image": "/Frame 77.png",
+      "rating": "4.9/5",
+      "badge": { "text": "Top 10", "type": "top" }
+    }
   ],
   "trending": [
-    { "title": "The Tomorrow War", "image": "/image 212.png", "badge": { "text": "Top 10", "type": "top" } },
-    { "title": "Quantumania", "image": "/image 221.png", "badge": { "text": "Top 15", "type": "top" } },
-    { "title": "Guardians of The Galaxy", "image": "/image 235.png", "badge": { "text": "Top 3", "type": "top" } },
-    { "title": "A Man Called Otto", "image": "/image 215.png", "badge": { "text": "Top 15", "type": "top" } },
-    { "title": "The Little Mermaid", "image": "/Frame 74.png", "badge": { "text": "Top 10", "type": "top" } }
+    {
+      "title": "The Tomorrow War",
+      "image": "/image 212.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Quantumania",
+      "image": "/image 221.png",
+      "badge": { "text": "Top 15", "type": "top" }
+    },
+    {
+      "title": "Guardians of The Galaxy",
+      "image": "/image 235.png",
+      "badge": { "text": "Top 3", "type": "top" }
+    },
+    {
+      "title": "A Man Called Otto",
+      "image": "/image 215.png",
+      "badge": { "text": "Top 15", "type": "top" }
+    },
+    {
+      "title": "The Little Mermaid",
+      "image": "/Frame 74.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    }
   ],
   "newRelease": [
-    { "title": "The Little Mermaid", "image": "/Frame 74.png", "badge": { "text": "Top 10", "type": "top" } },
-    { "title": "Duty After School", "image": "/image 222.png", "badge": { "text": "Episode Baru", "type": "episode" } },
-    { "title": "Big Hero 6", "image": "/Frame 77.png", "badge": { "text": "Top 10", "type": "top" } },
-    { "title": "All of us Are Dead", "image": "/Frame 79.png", "badge": { "text": "Episode Baru", "type": "episode" } },
+    {
+      "title": "The Little Mermaid",
+      "image": "/Frame 74.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "Duty After School",
+      "image": "/image 222.png",
+      "badge": { "text": "Episode Baru", "type": "episode" }
+    },
+    {
+      "title": "Big Hero 6",
+      "image": "/Frame 77.png",
+      "badge": { "text": "Top 10", "type": "top" }
+    },
+    {
+      "title": "All of us Are Dead",
+      "image": "/Frame 79.png",
+      "badge": { "text": "Episode Baru", "type": "episode" }
+    },
     { "title": "Missing", "image": "/image 218.png" }
   ]
 }
