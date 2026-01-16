@@ -1,15 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,500,600,700&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-}
-
-
 @import "tailwindcss/theme" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
+@import "./styles/auth.css";
 
 /* === ROOT VARIABLES === */
 :root {
