@@ -50,5 +50,10 @@ export const useAuth = () => {
     setIsAuthenticated(false);
   };
 
-  return { user, isAuthenticated, login, register, logout, loading };
+  const updateUserState = (userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  };
+
+  return { user, isAuthenticated, login, register, logout, loading, updateUserState };
 };

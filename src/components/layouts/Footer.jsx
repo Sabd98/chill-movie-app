@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
-import '../styles/footer.css';
+import '../../styles/footer.css';
 
 const FooterAccordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);

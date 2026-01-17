@@ -1,6 +1,6 @@
 import { Play, Info, Volume2, VolumeX } from 'lucide-react';
 import { useState } from 'react';
-import Button from './ui/Button';
+import Button from '../ui/Button';
 
 const Hero = () => {
   const [isMuted, setIsMuted] = useState(true);

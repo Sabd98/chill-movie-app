@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, User, Star, LogOut } from "lucide-react";
 import { useNavigate } from "react-router";
-import '../styles/header.css';
+import '../../styles/header.css';
 
 const Header = ({ onLogout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,10 +32,10 @@ const Header = ({ onLogout }) => {
               alt="Logo"
               className="flex items-center text-[1.8rem] font-bold"
             />
-            <a href="#" className="nav-link">
+            <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/home'); }}>
               Series
             </a>
-            <a href="#" className="nav-link">
+            <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/home'); }}>
               Film
             </a>
             <a href="#" className="nav-link">
@@ -56,7 +56,7 @@ const Header = ({ onLogout }) => {
             </div>
             {isDropdownOpen && (
               <div className="dropdown show">
-                <a href="#" onClick={(e) => e.preventDefault()}>
+                <a href="#" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>
                   <User size={16} /> Profil Saya
                 </a>
                 <a href="#" onClick={(e) => e.preventDefault()}>

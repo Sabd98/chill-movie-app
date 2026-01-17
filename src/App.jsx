@@ -1,9 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router';
+import { Routes, Route, Navigate, Outlet } from 'react-router';
 import { useAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute';
+import Profile from './pages/Profile';
+import ProtectedRoute from './components/layouts/ProtectedRoute';
+import MainLayout from './components/layouts/MainLayout';
 import './App.css';
 
 const PublicRoute = ({ children }) => {
@@ -16,14 +18,11 @@ function App() {
     <Routes>
       <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-      <Route 
-        path="/home" 
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        } 
-      />
+      
+      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+        <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
     </Routes>
   );
 }
