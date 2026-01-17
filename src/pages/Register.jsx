@@ -8,18 +8,18 @@ import '../styles/auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, loading } = useAuth();
   
   const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
     { username: '', password: '', confirmPassword: '' },
     registerSchema
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = register(values.username, values.password);
+      const result = await register(values.username, values.password);
       if (result.success) {
         navigate('/');
       } else {
@@ -76,8 +76,8 @@ const Register = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full">
-              Daftar
+            <Button type="submit" variant="primary" className="w-full" disabled={loading}>
+              {loading ? 'Mendaftar...' : 'Daftar'}
             </Button>
             <span className="auth-or-text">Atau</span>
             <Button 

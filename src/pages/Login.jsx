@@ -8,18 +8,18 @@ import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loading } = useAuth();
   
   const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
     { username: '', password: '' },
     loginSchema
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = login(values.username, values.password);
+      const result = await login(values.username, values.password);
       if (result.success) {
         navigate('/home');
       } else {
@@ -66,8 +66,8 @@ const Login = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full">
-              Masuk
+            <Button type="submit" variant="primary" className="w-full" disabled={loading}>
+              {loading ? 'Masuk...' : 'Masuk'}
             </Button>
             <span className="auth-or-text text-white/70 text-[15px] block text-center">Atau</span>
             <Button 

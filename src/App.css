@@ -26,7 +26,7 @@
   position: relative;
   left: 0;
   top: 0;
-  display: flex !important;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
 }
@@ -64,6 +64,8 @@
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
+  padding: 0;
+  outline: none;
 }
 
 .carousel-arrow:hover {
@@ -71,12 +73,24 @@
   transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-arrow-prev {
+.movie-row-horizontal .carousel-arrow-prev {
   left: -25px;
+  top: 12vh;
 }
 
-.carousel-arrow-next {
+.movie-row-horizontal .carousel-arrow-next {
   right: -25px;
+  top: 12vh;
+}
+
+.movie-row-vertical .carousel-arrow-prev {
+  left: -25px;
+  top: 30vh;
+}
+
+.movie-row-vertical .carousel-arrow-next {
+  right: -25px;
+  top: 30vh;
 }
 
 .movie-row-wrapper {
@@ -90,17 +104,10 @@
     height: 40px;
   }
   
-  .carousel-arrow-prev {
-    left: 5px;
-  }
-  
-  .carousel-arrow-next {
-    right: 5px;
-  }
   
   .movie-row-wrapper {
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
 

@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "../api/client";
 import { useCallback, useEffect, useState } from "react";
 
 export function useFetch(apiUrl) {
@@ -8,7 +8,7 @@ export function useFetch(apiUrl) {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(apiUrl);
+      const response = await apiClient.get(apiUrl);
       setFetchedData(response.data);
     } catch (err) {
       setError("Failed to load data");

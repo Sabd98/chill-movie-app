@@ -8,6 +8,7 @@ const CustomPrevArrow = ({ onClick }) => (
   <button 
     className="carousel-arrow carousel-arrow-prev"
     onClick={onClick}
+    aria-label="Previous slide"
   >
     <ChevronLeft size={28} />
   </button>
@@ -17,12 +18,13 @@ const CustomNextArrow = ({ onClick }) => (
   <button 
     className="carousel-arrow carousel-arrow-next"
     onClick={onClick}
+    aria-label="Next slide"
   >
     <ChevronRight size={28} />
   </button>
 );
 
-const MovieRow = ({ movies, onMovieClick }) => {
+const MovieRow = ({ movies, onMovieClick, orientation = 'vertical' }) => {
   const settings = {
     dots: false,
     infinite: false,
@@ -64,7 +66,7 @@ const MovieRow = ({ movies, onMovieClick }) => {
   };
 
   return (
-    <div className="relative movie-row-wrapper mx-8!">
+    <div className={`relative movie-row-wrapper mx-8! movie-row-${orientation}`}>
       <Slider {...settings}>
         {movies.map((movie, index) => (
           <div key={index}>

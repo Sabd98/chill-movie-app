@@ -26,19 +26,19 @@ const Home = () => {
         <section className="content-sections">
           <div className="container">
             <MovieSection title="Melanjutkan Tonton Film" id="continuing-section">
-              <MovieRow movies={fetchedData.continuing} onMovieClick={handleMovieClick} />
+              <MovieRow movies={fetchedData.continuing} onMovieClick={handleMovieClick} orientation="horizontal" />
             </MovieSection>
 
             <MovieSection title="Top Rating Film dan Series Hari ini">
-              <MovieRow movies={fetchedData.topRating} onMovieClick={handleMovieClick} />
+              <MovieRow movies={fetchedData.topRating} onMovieClick={handleMovieClick} orientation="vertical" />
             </MovieSection>
 
             <MovieSection title="Film Trending">
-              <MovieRow movies={fetchedData.trending} onMovieClick={handleMovieClick} />
+              <MovieRow movies={fetchedData.trending} onMovieClick={handleMovieClick} orientation="vertical" />
             </MovieSection>
 
             <MovieSection title="Rilis Baru">
-              <MovieRow movies={fetchedData.newRelease} onMovieClick={handleMovieClick} />
+              <MovieRow movies={fetchedData.newRelease} onMovieClick={handleMovieClick} orientation="vertical" />
             </MovieSection>
           </div>
         </section>
