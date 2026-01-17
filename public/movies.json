@@ -2,162 +2,162 @@
   "continuing": [
     {
       "title": "Don't Look at Up",
-      "image": "/image 233.png",
+      "image": "/images/image 233.png",
       "rating": "4.5/5"
     },
     {
       "title": "All of us Are Dead",
-      "image": "/image 223.png",
+      "image": "/images/image 223.png",
       "rating": "4.7/5"
     },
-    { "title": "Blue Lock", "image": "/Blue Lock.png", "rating": "4.6/5" },
+    { "title": "Blue Lock", "image": "/images/Blue Lock.png", "rating": "4.6/5" },
     {
       "title": "A Man Called Otto",
-      "image": "/image 224.png",
+      "image": "/images/image 224.png",
       "rating": "4.1/5"
     },
-    { "title": "Suzume", "image": "/image11.png", "rating": "4.9/5" },
-    { "title": "Big Hero 6", "image": "/image10.png", "rating": "4.4/5" },
-    { "title": "The Batman", "image": "/image 22.png", "rating": "4.9/5" },
-    { "title": "Rio", "image": "/image 08.png", "rating": "4.0/5" },
+    { "title": "Suzume", "image": "/images/image11.png", "rating": "4.9/5" },
+    { "title": "Big Hero 6", "image": "/images/image10.png", "rating": "4.4/5" },
+    { "title": "The Batman", "image": "/images/image 22.png", "rating": "4.9/5" },
+    { "title": "Rio", "image": "/images/image 08.png", "rating": "4.0/5" },
     {
       "title": "The Tomorrow War",
-      "image": "/image 21.png",
+      "image": "/images/image 21.png",
       "rating": "3.8/5"
     },
     {
       "title": "Boku no Hero Academia",
-      "image": "/image 31.png",
+      "image": "/images/image 31.png",
       "rating": "4.6/5"
     }
   ],
   "topRating": [
     {
       "title": "Suzume",
-      "image": "/image 219.png",
+      "image": "/images/image 219.png",
       "rating": "4.8/5",
       "badge": { "text": "Top 3", "type": "top" }
     },
-    { "title": "Jurassic World", "image": "/Frame 78.png", "rating": "4.7/5" },
+    { "title": "Jurassic World", "image": "/images/Frame 78.png", "rating": "4.7/5" },
     {
       "title": "Blue Lock",
-      "image": "/image 210.png",
+      "image": "/images/image 210.png",
       "rating": "4.6/5",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
     {
       "title": "A Man Called Otto",
-      "image": "/image 215.png",
+      "image": "/images/image 215.png",
       "rating": "4.1/5"
     },
     {
       "title": "Big Hero 6",
-      "image": "/Frame 77.png",
+      "image": "/images/Frame 77.png",
       "rating": "4.9/5",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "The Batman",
-      "image": "/Number=8.png",
+      "image": "/images/Number=8.png",
       "rating": "4.9/5",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Sonic The Hedgehog 2",
-      "image": "/Frame 76.png",
+      "image": "/images/Frame 76.png",
       "rating": "4.1/5"
     },
     {
       "title": "Happiness",
-      "image": "/Number=28.png",
+      "image": "/images/Number=28.png",
       "rating": "3.8/5"
     },
     {
       "title": "Fast X",
-      "image": "/Number=4.png",
+      "image": "/images/Number=4.png",
       "badge": { "text": "Top 10", "type": "top" }
     }
   ],
   "trending": [
     {
       "title": "The Tomorrow War",
-      "image": "/image 212.png",
+      "image": "/images/image 212.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Quantumania",
-      "image": "/image 221.png",
+      "image": "/images/image 221.png",
       "badge": { "text": "Top 15", "type": "top" }
     },
     {
       "title": "Guardians of The Galaxy",
-      "image": "/image 235.png",
+      "image": "/images/image 235.png",
       "badge": { "text": "Top 3", "type": "top" }
     },
     {
       "title": "A Man Called Otto",
-      "image": "/image 215.png",
+      "image": "/images/image 215.png",
       "badge": { "text": "Top 15", "type": "top" }
     },
     {
       "title": "The Little Mermaid",
-      "image": "/Frame 74.png",
+      "image": "/images/Frame 74.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Doctor Strange in the Multiverse of Madness",
-      "image": "/Number=19.png",
+      "image": "/images/Number=19.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Fast X",
-      "image": "/Number=4.png",
+      "image": "/images/Number=4.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Black Adam",
-      "image": "/Number=21.png"
+      "image": "/images/Number=21.png"
     },
     {
       "title": "Shazam Fury of The Gods",
-      "image": "/Number=2.png",
+      "image": "/images/Number=2.png",
       "badge": { "text": "Top 15", "type": "top" }
     },
     {
       "title": "Dilan 1991",
-      "image": "/image 232.png",
+      "image": "/images/image 232.png",
       "badge": { "text": "Top 3", "type": "top" }
     }
   ],
   "newRelease": [
     {
       "title": "The Little Mermaid",
-      "image": "/Frame 74.png",
+      "image": "/images/Frame 74.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "Duty After School",
-      "image": "/image 222.png",
+      "image": "/images/image 222.png",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
     {
       "title": "Big Hero 6",
-      "image": "/Frame 77.png",
+      "image": "/images/Frame 77.png",
       "badge": { "text": "Top 10", "type": "top" }
     },
     {
       "title": "All of us Are Dead",
-      "image": "/Frame 79.png",
+      "image": "/images/Frame 79.png",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
-    { "title": "Missing", "image": "/image 218.png" },
-    { "title": "Avatar", "image": "/Number=3.png" },
-    { "title": "Baymax", "image": "/Number=26.png" },
+    { "title": "Missing", "image": "/images/image 218.png" },
+    { "title": "Avatar", "image": "/images/Number=3.png" },
+    { "title": "Baymax", "image": "/images/Number=26.png" },
     {
       "title": "Alice in Borderland",
-      "image": "/image 216.png",
+      "image": "/images/image 216.png",
       "badge": { "text": "Episode Baru", "type": "episode" }
     },
-    { "title": "Megan", "image": "/image 220.png" }
+    { "title": "Megan", "image": "/images/image 220.png" }
   ]
 }
