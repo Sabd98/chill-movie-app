@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, FileText } from "lucide-react";
+import { FileText, Pencil, PencilOff } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useForm } from "../hooks/useForm";
 import { loginSchema } from "../utils/validation";
@@ -52,8 +52,9 @@ const Profile = () => {
   };
 
   return (
-    <main className="profile-container">
-      <h2 className="profile-header my-8!">Profil Saya</h2>
+    <main className="pt-[100px]! min-h-screen bg-[#181a1c]">
+      <div className="container mx-auto">
+        <h2 className="text-3xl font-bold text-white mb-8!">Profil Saya</h2>
 
       <div className="profile-content">
         <div className="profile-left">
@@ -98,7 +99,7 @@ const Profile = () => {
                 />
               </div>
               {errors.username && (
-                <span className="text-red-500 text-xs mt-1">
+                <span className="text-red-500 text-xs mt-1!">
                   {errors.username}
                 </span>
               )}
@@ -108,7 +109,7 @@ const Profile = () => {
               <label className="form-label mb-2!">Kata Sandi</label>
               <div className="input-wrapper">
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   value={values.password}
                   placeholder="Ubah Kata Sandi"
@@ -117,14 +118,19 @@ const Profile = () => {
                   disabled={!isEditingPassword}
                   className={`profile-input ${errors.password ? "border-red-500" : ""}`}
                 />
-                <Pencil
+                {isEditingPassword  ?<Pencil
                   size={20}
                   className="edit-icon"
                   onClick={() => setIsEditingPassword(!isEditingPassword)}
-                />
+                /> :<PencilOff
+                  size={20}
+                  className="edit-icon"
+                  onClick={() => setIsEditingPassword(!isEditingPassword)}
+                />}
+                
               </div>
               {errors.password && (
-                <span className="text-red-500 text-xs mt-1">
+                <span className="text-red-500 text-xs mt-1!">
                   {errors.password}
                 </span>
               )}
@@ -132,7 +138,7 @@ const Profile = () => {
 
             {updateMessage.text && (
               <div
-                className={`mb-4 p-3 rounded ${updateMessage.type === "success" ? "bg-green-500/20 text-green-500" : "bg-red-500/20 text-red-500"}`}
+                className={`mb-4! p-3! rounded ${updateMessage.type === "success" ? "bg-green-500/20 text-green-500" : "bg-red-500/20 text-red-500"}`}
               >
                 {updateMessage.text}
               </div>
@@ -148,19 +154,8 @@ const Profile = () => {
           </form>
         </div>
       </div>
-
-      <section className="my-list-section mt-4!">
-        <div className="my-list-header flex justify-between items-center">
-          <h3 className="my-list-title text-2xl font-bold">Daftar Saya</h3>
-          <a href="#" className="see-all text-gray-400 hover:text-white">
-            Lihat Semua
-          </a>
-        </div>
-        <div className="flex gap-4 overflow-x-auto pb-4">
-          Coming Soon, Under Construction
-        </div>
-      </section>
-    </main>
+    </div>
+  </main>
   );
 };
 

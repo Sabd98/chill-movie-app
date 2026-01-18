@@ -12,9 +12,11 @@ export const useAuth = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const login = async (username, password) => {
     setLoading(true);
+    setError(null);
     try {
       const response = await loginUser({ username, password });
       const userData = response.data;
@@ -23,8 +25,8 @@ export const useAuth = () => {
       setIsAuthenticated(true);
       return { success: true };
     } catch (err) {
-      const message =
-        err.response?.data?.message;
+      const message = err.message || "Terjadi kesalahan saat login";
+      setError(message);
       return { success: false, error: message };
     } finally {
       setLoading(false);
@@ -33,11 +35,13 @@ export const useAuth = () => {
 
   const register = async (username, password) => {
     setLoading(true);
+    setError(null);
     try {
       await registerUser({ username, password });
       return { success: true };
     } catch (err) {
-      const message = err.response?.data?.message;
+      const message = err.message || "Terjadi kesalahan saat mendaftar";
+      setError(message);
       return { success: false, error: message };
     } finally {
       setLoading(false);
@@ -48,6 +52,7 @@ export const useAuth = () => {
     localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
+    setError(null);
   };
 
   const updateUserState = (userData) => {
@@ -55,5 +60,17 @@ export const useAuth = () => {
     setUser(userData);
   };
 
-  return { user, isAuthenticated, login, register, logout, loading, updateUserState };
+  const clearError = () => setError(null);
+
+  return { 
+    user, 
+    isAuthenticated, 
+    login, 
+    register, 
+    logout, 
+    loading, 
+    error, 
+    clearError,
+    updateUserState 
+  };
 };

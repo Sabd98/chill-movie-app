@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export const useForm = (initialValues, validationSchema) => {
+export const useForm = (initialValues, validationSchema, options = {}) => {
+  const { externalError, clearError } = options;
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -12,7 +13,19 @@ export const useForm = (initialValues, validationSchema) => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+
+    if (externalError && clearError) {
+      clearError();
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      if (clearError) {
+        clearError();
+      }
+    };
+  }, []);
 
   const handleBlur = (e) => {
     const { name } = e.target;

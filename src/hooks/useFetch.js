@@ -8,8 +8,15 @@ export function useFetch(apiUrl) {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await apiClient.get(apiUrl);
-      setFetchedData(response.data);
+      setLoading(true);
+      let data;
+      if (typeof apiUrl === "function") {
+        data = await apiUrl();
+      } else {
+        const response = await apiClient.get(apiUrl);
+        data = response.data;
+      }
+      setFetchedData(data);
     } catch (err) {
       setError("Failed to load data");
       console.error(err);

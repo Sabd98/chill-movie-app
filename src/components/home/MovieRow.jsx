@@ -70,7 +70,7 @@ const MovieRow = ({ movies, onMovieClick, orientation = 'vertical' }) => {
       <Slider {...settings}>
         {movies.map((movie, index) => (
           <div key={index}>
-            <MovieCard movie={movie} onClick={onMovieClick} />
+            <MovieCard movie={movie} orientation={orientation} onMovieClick={onMovieClick} />
           </div>
         ))}
       </Slider>

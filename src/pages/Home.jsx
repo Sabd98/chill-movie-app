@@ -12,31 +12,33 @@ const Home = () => {
   };
 
   return (
-    <main className="main-content">
+    <main className="main-content bg-[#181a1c]">
       <Hero />
-      {loading && <div className="container" style={{ padding: '40px', textAlign: 'center' }}>Loading movies...</div>}
-      {error && <div className="container" style={{ padding: '40px', textAlign: 'center', color: 'red' }}>Error: {error}</div>}
-      {!loading && !error && fetchedData && (
-      <section className="content-sections">
-        <div className="container">
-          <MovieSection title="Melanjutkan Tonton Film" id="continuing-section">
-            <MovieRow movies={fetchedData.continuing} onMovieClick={handleMovieClick} orientation="horizontal" />
-          </MovieSection>
+      <div className="relative! z-10! -mt-20!">
+        {loading && <div className="container" style={{ padding: '40px', textAlign: 'center' }}>Loading movies...</div>}
+        {error && <div className="container" style={{ padding: '40px', textAlign: 'center', color: 'red' }}>Error: {error}</div>}
+        {!loading && !error && fetchedData && (
+        <section className="content-sections">
+          <div className="container mx-auto px-4!">
+            <MovieSection title="Melanjutkan Tonton Film" id="continuing-section">
+              <MovieRow movies={fetchedData.continuing} onMovieClick={handleMovieClick} orientation="horizontal" />
+            </MovieSection>
 
-          <MovieSection title="Top Rating Film dan Series Hari ini">
-            <MovieRow movies={fetchedData.topRating} onMovieClick={handleMovieClick} orientation="vertical" />
-          </MovieSection>
+            <MovieSection title="Top Rating Film dan Series Hari ini">
+              <MovieRow movies={fetchedData.topRating} onMovieClick={handleMovieClick} orientation="vertical" />
+            </MovieSection>
 
-          <MovieSection title="Film Trending">
-            <MovieRow movies={fetchedData.trending} onMovieClick={handleMovieClick} orientation="vertical" />
-          </MovieSection>
+            <MovieSection title="Film Trending">
+              <MovieRow movies={fetchedData.trending} onMovieClick={handleMovieClick} orientation="vertical" />
+            </MovieSection>
 
-          <MovieSection title="Rilis Baru">
-            <MovieRow movies={fetchedData.newRelease} onMovieClick={handleMovieClick} orientation="vertical" />
-          </MovieSection>
-        </div>
-      </section>
-      )}
+            <MovieSection title="Rilis Baru">
+              <MovieRow movies={fetchedData.newRelease} onMovieClick={handleMovieClick} orientation="vertical" />
+            </MovieSection>
+          </div>
+        </section>
+        )}
+      </div>
     </main>
   );
 };

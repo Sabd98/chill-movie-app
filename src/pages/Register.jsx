@@ -8,11 +8,12 @@ import '../styles/auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, loading } = useAuth();
+  const { register, loading, error, clearError } = useAuth();
   
-  const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
+  const { values, errors, handleChange, handleBlur, validate } = useForm(
     { username: '', password: '', confirmPassword: '' },
-    registerSchema
+    registerSchema,
+    { externalError: error, clearExternalError: clearError }
   );
 
   const handleSubmit = async (e) => {
@@ -22,8 +23,6 @@ const Register = () => {
       const result = await register(values.username, values.password);
       if (result.success) {
         navigate('/');
-      } else {
-        setErrors({ username: result.error });
       }
     }
   };
@@ -89,6 +88,7 @@ const Register = () => {
               Daftar dengan Google
             </Button>
           </div>
+          {error && <div className="auth-error-message-bottom">{error}</div>}
         </form>
       </section>
     </main>

@@ -8,11 +8,12 @@ import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading } = useAuth();
+  const { login, loading, error, clearError } = useAuth();
   
-  const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
+  const { values, errors, handleChange, handleBlur, validate } = useForm(
     { username: '', password: '' },
-    loginSchema
+    loginSchema,
+    { externalError: error, clearError: clearError }
   );
 
   const handleSubmit = async (e) => {
@@ -22,8 +23,6 @@ const Login = () => {
       const result = await login(values.username, values.password);
       if (result.success) {
         navigate('/home');
-      } else {
-        setErrors({ username: result.error });
       }
     }
   };
@@ -79,6 +78,7 @@ const Login = () => {
               Masuk dengan Google
             </Button>
           </div>
+          {error && <div className="auth-error-message-bottom">{error}</div>}
         </form>
       </section>
     </main>

@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import MyList from './pages/MyList';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
 import MainLayout from './components/layouts/MainLayout';
 import './App.css';
@@ -22,6 +23,7 @@ function App() {
       <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/my-list" element={<MyList />} />
       </Route>
     </Routes>
   );

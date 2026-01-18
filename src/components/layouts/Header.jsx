@@ -10,10 +10,13 @@ const Header = ({ onLogout }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollY > 20);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -38,7 +41,7 @@ const Header = ({ onLogout }) => {
             <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/home'); }}>
               Film
             </a>
-            <a href="#" className="nav-link">
+            <a href="#" className="nav-link" onClick={(e) => { e.preventDefault(); navigate('/my-list'); }}>
               Daftar Saya
             </a>
           </nav>

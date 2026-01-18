@@ -1,7 +1,6 @@
 
 .container {
   max-width: 1920px;
-  margin: 0 auto;
   padding: 0 2rem;
 }
 
@@ -114,7 +113,6 @@
 /* Responsive Layout Overrides */
 @media (max-width: 768px) {
   .header {
-    position: relative;
     padding: 1rem;
     font-size: 14px;
   }

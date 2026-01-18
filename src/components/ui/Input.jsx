@@ -16,7 +16,7 @@ const Input = ({
   const inputType = isPassword && showPassword ? 'text' : type;
 
   return (
-    <div className="field">
+    <div className="field relative w-full mb-4">
       <input
         type={inputType}
         name={name}
@@ -28,13 +28,17 @@ const Input = ({
       />
       {isPassword && (
         <span 
-          className="show" 
+          className="absolute top-[48px] -translate-y-1/2 right-4 cursor-pointer text-[#ccc] transition-colors duration-300 hover:text-white"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </span>
       )}
-      {error && <span className="error-message">{error}</span>}
+      {error && (
+        <div className="text-[#ff4444] text-sm mt-1.5! ml-4! text-left font-medium animate-pulse">
+          {error}
+        </div>
+      )}
     </div>
   );
 };
