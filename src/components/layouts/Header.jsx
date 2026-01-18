@@ -10,7 +10,7 @@ const Header = ({ onLogout }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+      const scrollY = window.scrollY;
       setIsScrolled(scrollY > 20);
     };
 

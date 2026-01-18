@@ -1,4 +1,14 @@
 
+import { moviesData } from '../data/movies';
+
+export const getMovies = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(moviesData);
+    }, 500);
+  });
+};
+
 export const updateUser = async (oldUsername, newData) => {
   const users = JSON.parse(localStorage.getItem('app_users') || '[]');
   const userIndex = users.findIndex(u => u.username === oldUsername);

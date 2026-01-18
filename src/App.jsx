@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router';
+import { Routes, Route, Navigate } from 'react-router';
 import { useAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
