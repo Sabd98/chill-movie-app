@@ -1,4 +1,4 @@
-import { Play, Info, Volume2, VolumeX } from 'lucide-react';
+import { Play, Info, Volume2, VolumeX, Pause } from 'lucide-react';
 import { useState } from 'react';
 import Button from '../ui/Button';
 
@@ -31,23 +31,23 @@ const Hero = () => {
               menengah. Mereka pun segera menjadi pejuang garis depan dalam
               perang.
             </p>
-            <div className="flex items-center gap-4!">
+            <div className="flex items-center gap-4">
               <Button 
                 variant="play"
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="rounded-full! font-bold!"
-                icon={<Play size={20} fill="white" />}
+                className="rounded-full! font-bold hover:bg-white/10"
+                icon={isPlaying?<Pause size={20} fill="white" />:<Play size={20} fill="white" /> }
               >
                 {isPlaying ? 'Berhenti' : 'Putar'}
               </Button>
               <Button 
                 variant="info"
-                className="rounded-full! font-bold!"
+                className="rounded-full font-bold hover:bg-white/10"
                 icon={<Info size={20} />}
               >
                 Selengkapnya
               </Button>
-              <div className="ml-auto flex items-center gap-4!">
+              <div className="ml-auto flex items-center gap-4">
                 <Button 
                   variant="volume"
                   onClick={() => setIsMuted(!isMuted)}
