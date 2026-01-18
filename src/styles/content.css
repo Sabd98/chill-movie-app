@@ -50,12 +50,10 @@
 
 .movie-row-vertical .carousel-arrow-prev {
   left: -25px;
-  top: 30vh;
 }
 
 .movie-row-vertical .carousel-arrow-next {
   right: -25px;
-  top: 30vh;
 }
 
 .movie-row-wrapper {
@@ -64,15 +62,38 @@
 }
 
 @media (max-width: 768px) {
-  .carousel-arrow {
-    width: 40px;
-    height: 40px;
+  .movie-row-wrapper {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
   }
   
+  .slick-slide > div {
+    padding: 0 4px;
+  }
   
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .carousel-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
   .movie-row-wrapper {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.25rem !important;
+    margin-right: 0.25rem !important;
+  }
+  
+  .carousel-arrow-prev {
+    left: -10px;
+  }
+  
+  .carousel-arrow-next {
+    right: -10px;
   }
 }
 

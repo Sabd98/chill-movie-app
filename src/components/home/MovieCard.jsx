@@ -40,22 +40,21 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
 
   return (
     <div 
-      className="relative z-10 p-1!"
+      className={`relative z-10 ${orientation === 'vertical' ? 'p-2!' : 'p-1!'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Motion
-        className={`relative cursor-pointer bg-[#181818] rounded-lg overflow-hidden shadow-lg ${isHovered ? 'z-50 shadow-2xl' : 'z-10'}`}
+        className={`relative cursor-pointer bg-[#181818] rounded-lg overflow-hidden shadow-lg ${isHovered ? 'z-50 shadow-2xl ' : 'z-10'}`}
         initial={{ scale: 1 }}
         whileHover={{ 
-          scale: orientation === 'vertical' ? 1.15 : 1.08,
-          y: orientation === 'vertical' ? -20 : -10,
-          transition: { duration: 0.2, ease: "easeOut" }
+          scale: 1.05,
+          transition: { duration: 0.3, ease: "easeOut" }
         }}
       >
-        <div className={`relative ${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'}`}>
+        <div className={`relative transition-all duration-300 ${isHovered ? 'aspect-video' : (orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video')}`}>
           {movie.badge && (
-            <div className={`absolute top-2! left-2! px-2! py-1! rounded text-[10px] font-bold z-1000 ${
+            <div className={`absolute top-2! left-2! px-2! py-1! rounded text-[10px] font-bold z-10 ${
               movie.badge.type === 'top' 
                 ? 'bg-[#E11D48] text-white' 
                 : 'bg-[#1E40AF] text-white'
@@ -76,24 +75,25 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="bg-[#4a4a4a] p-4! shadow-2xl rounded-b-lg"
+              transition={{ duration: 0.3 }}
+              className="bg-[#181818] p-4! border-t border-gray-800"
             >
               <div className="flex items-center gap-2 mb-4!">
-                <Button variant="icon-play">
-                  <Play size={20} fill="black" />
+                <Button variant="icon-play" className="scale-90">
+                  <Play size={18} fill="black" />
                 </Button>
                 <Button 
                   variant="icon-outline"
                   onClick={handleToggleList}
+                  className="scale-90"
                 >
                   {inList ? <HeartMinus size={18} /> : <HeartPlus size={18} />}
                 </Button>
-                <Button variant="icon-outline">
-                  <ThumbsUp size={18} />
+                <Button variant="icon-outline" className="scale-90">
+                  <ThumbsUp size={16} />
                 </Button>
-                <Button variant="icon-outline" className="ml-auto">
-                  <ChevronDown size={18} />
+                <Button variant="icon-outline" className="ml-auto scale-90">
+                  <ChevronDown size={16} />
                 </Button>
               </div>
 
