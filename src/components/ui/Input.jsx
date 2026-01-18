@@ -24,7 +24,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        className={`w-full h-[50px] px-4 py-3 bg-[#333] border-2 border-[#444] rounded-full text-white text-base outline-none transition-colors duration-300 focus:border-[#0F1E93] ${error ? 'border-[#ff4444]' : ''} ${className}`}
+        className={`w-full h-[50px] px-4 py-3 bg-[#333] border-2 rounded-full text-white text-base outline-none transition-colors duration-300 ${error ? '!border-[#ff4444] error' : 'border-[#444]'} ${className}`}
       />
       {isPassword && (
         <span 
@@ -35,7 +35,7 @@ const Input = ({
         </span>
       )}
       {error && (
-        <div className="text-[#ff4444] text-sm mt-1.5! ml-4! text-left font-medium animate-pulse">
+        <div className="text-[#ff4444] text-sm !mt-1.5 !ml-4 text-left font-medium animate-pulse">
           {error}
         </div>
       )}
