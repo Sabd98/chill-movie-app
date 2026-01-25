@@ -1,4 +1,5 @@
 import api from './apiRoot';
+import { encryptPassword } from '../utils/crypto';
 
 const getUsers = async () => {
   try {
@@ -19,7 +20,8 @@ const getUsers = async () => {
 export const loginUser = async (credentials) => {
   const users = await getUsers();
   
-  const user = users.find(u => u.username === credentials.username && u.password === credentials.password);
+  const encryptedPassword = encryptPassword(credentials.password);
+  const user = users.find(u => u.username === credentials.username && u.password === encryptedPassword);
   
   if (user) {
     return { data: { username: user.username, password: user.password } };
@@ -37,7 +39,7 @@ export const registerUser = async (userData) => {
 
   const newUser = {
     username: userData.username,
-    password: userData.password
+    password: encryptPassword(userData.password)
   };
 
   await api.post('/users.json', newUser);

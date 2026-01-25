@@ -1,5 +1,6 @@
 import api from './apiRoot';
 import useAuthStore from '../store/authStore';
+import { encryptPassword } from '../utils/crypto';
 
 export const getCurrentUsername = () => {
   const user = useAuthStore.getState().user;
@@ -29,14 +30,14 @@ export const updateUser = async (oldUsername, newData) => {
 
   const updates = {};
   if (newData.username) updates.username = newData.username;
-  if (newData.password) updates.password = newData.password;
+  if (newData.password) updates.password = encryptPassword(newData.password);
 
   await api.patch(`/users/${targetUser.id}.json`, updates);
 
   return { 
     data: { 
       username: newData.username || targetUser.username, 
-      password: newData.password || targetUser.password 
+      password: updates.password || targetUser.password 
     } 
   };
 };

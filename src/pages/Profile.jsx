@@ -4,6 +4,7 @@ import useAuthStore from "../store/authStore";
 import { useForm } from "../hooks/useForm";
 import { loginSchema } from "../utils/validation";
 import { updateUser } from "../api/user";
+import { decryptPassword } from "../utils/crypto";
 import Button from "../components/ui/Button";
 import "../styles/profile.css";
 
@@ -16,7 +17,7 @@ const Profile = () => {
   const { values, errors, handleChange, validate } = useForm(
     {
       username: user?.username || "",
-      password: user?.password||"",
+      password: user?.password ? decryptPassword(user.password) : "",
     },
     loginSchema,
     { formId: user ? `profile-${user.username}` : 'profile-guest' }
@@ -92,11 +93,16 @@ const Profile = () => {
                   disabled={!isEditingUsername}
                   className={`profile-input ${errors.username ? "border-red-500" : ""}`}
                 />
-                <Pencil
+                {isEditingUsername? <PencilOff
                   size={20}
                   className="edit-icon"
                   onClick={() => setIsEditingUsername(!isEditingUsername)}
-                />
+                />:<Pencil
+                  size={20}
+                  className="edit-icon"
+                  onClick={() => setIsEditingUsername(!isEditingUsername)}
+                />}
+               
               </div>
               {errors.username && (
                 <span className="text-red-500 text-xs mt-1!">
@@ -117,11 +123,11 @@ const Profile = () => {
                   disabled={!isEditingPassword}
                   className={`profile-input ${errors.password ? "border-red-500" : ""}`}
                 />
-                {isEditingPassword  ?<Pencil
+                {isEditingPassword ? <PencilOff
                   size={20}
                   className="edit-icon"
                   onClick={() => setIsEditingPassword(!isEditingPassword)}
-                /> :<PencilOff
+                /> : <Pencil
                   size={20}
                   className="edit-icon"
                   onClick={() => setIsEditingPassword(!isEditingPassword)}
