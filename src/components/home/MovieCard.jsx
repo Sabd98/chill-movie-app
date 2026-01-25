@@ -9,7 +9,6 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
   const Motion = motion.div;
   const movieId = movie.id || movie.title;
 
-  // Global state selector untuk reaktivitas
   const inList = useMyListStore(state => state.myList.some(m => m.id === movieId));
   const { addMovie, removeMovie } = useMyListStore();
 

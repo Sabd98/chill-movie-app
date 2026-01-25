@@ -6,7 +6,6 @@ export const getMovies = async () => {
   return response.data;
 };
 
-
 export const getMyList = async () => {
   const username = getCurrentUsername();
   if (!username) return [];
@@ -28,12 +27,6 @@ export const addToMyList = async (movie) => {
   if (!username) return false;
 
   try {
-    // Check keberadaan via API (opsional jika store sudah handle, tapi bagus untuk safety)
-    // Atau kita percayakan pada store untuk cek duplikasi di state lokal
-    // Untuk efisiensi, kita bisa skip checkIsMyList request jika kita yakin state sinkron,
-    // tapi untuk safety backend, PUT request biasanya idempotent.
-    // Firebase RTDB PUT akan overwrite, jadi aman.
-    
     await api.put(`/chill_my_list/${getSafeKey(username)}/${movie.id}.json`, movie);
     return true;
   } catch (error) {
@@ -50,7 +43,7 @@ export const removeFromMyList = async (movieId) => {
     await api.delete(`/chill_my_list/${getSafeKey(username)}/${movieId}.json`);
   } catch (error) {
      console.error("Error removing from list:", error);
-     throw error; // Lempar error agar store tahu kalau gagal
+     throw error; 
   }
 };
 

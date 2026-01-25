@@ -1,14 +1,9 @@
 import api from './apiRoot';
+import useAuthStore from '../store/authStore';
 
 export const getCurrentUsername = () => {
-  const userStr = localStorage.getItem('user');
-  if (!userStr) return null;
-  try {
-    const user = JSON.parse(userStr);
-    return user.username;
-  } catch {
-    return null;
-  }
+  const user = useAuthStore.getState().user;
+  return user ? user.username : null;
 };
 
 export const getSafeKey = (key) => {

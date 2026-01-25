@@ -13,12 +13,13 @@ const Profile = () => {
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [updateMessage, setUpdateMessage] = useState({ type: "", text: "" });
 
-  const { values, errors, handleChange, handleBlur, validate } = useForm(
+  const { values, errors, handleChange, validate } = useForm(
     {
       username: user?.username || "",
       password: user?.password||"",
     },
     loginSchema,
+    { formId: user ? `profile-${user.username}` : 'profile-guest' }
   );
 
   const handleUpdate = async (e) => {
@@ -88,7 +89,6 @@ const Profile = () => {
                   name="username"
                   value={values.username}
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   disabled={!isEditingUsername}
                   className={`profile-input ${errors.username ? "border-red-500" : ""}`}
                 />
@@ -114,7 +114,6 @@ const Profile = () => {
                   value={values.password}
                   placeholder="Ubah Kata Sandi"
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   disabled={!isEditingPassword}
                   className={`profile-input ${errors.password ? "border-red-500" : ""}`}
                 />

@@ -10,10 +10,10 @@ const Register = () => {
   const navigate = useNavigate();
   const { register, loading, error, clearError } = useAuthStore();
   
-  const { values, errors, handleChange, handleBlur, validate } = useForm(
+  const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '', confirmPassword: '' },
     registerSchema,
-    { externalError: error, clearExternalError: clearError }
+    { externalError: error, clearError: clearError, formId: 'register' }
   );
 
   const handleSubmit = async (e) => {
@@ -22,6 +22,7 @@ const Register = () => {
     if (validate()) {
       const result = await register(values.username, values.password);
       if (result.success) {
+        reset();
         navigate('/');
       }
     }
@@ -42,7 +43,6 @@ const Register = () => {
             placeholder="Masukkan Username"
             value={values.username}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.username}
           />
           <Input
@@ -51,7 +51,6 @@ const Register = () => {
             placeholder="Masukkan Kata Sandi"
             value={values.password}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.password}
             className="space"
           />
@@ -61,7 +60,6 @@ const Register = () => {
             placeholder="Konfirmasi Kata Sandi"
             value={values.confirmPassword}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.confirmPassword}
             className="space"
           />

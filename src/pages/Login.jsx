@@ -10,10 +10,10 @@ const Login = () => {
   const navigate = useNavigate();
   const { login, loading, error, clearError } = useAuthStore();
   
-  const { values, errors, handleChange, handleBlur, validate } = useForm(
+  const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '' },
     loginSchema,
-    { externalError: error, clearError: clearError }
+    { externalError: error, clearError: clearError, formId: 'login' }
   );
 
   const handleSubmit = async (e) => {
@@ -22,6 +22,7 @@ const Login = () => {
     if (validate()) {
       const result = await login(values.username, values.password);
       if (result.success) {
+        reset();
         navigate('/home');
       }
     }
@@ -42,7 +43,6 @@ const Login = () => {
             placeholder="Masukkan Username"
             value={values.username}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.username}
           />
           <Input
@@ -51,7 +51,6 @@ const Login = () => {
             placeholder="Masukkan Kata Sandi"
             value={values.password}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.password}
             className="space"
           />

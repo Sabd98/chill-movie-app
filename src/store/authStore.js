@@ -39,7 +39,10 @@ const useAuthStore = create(
 
       logout: () => {
         set({ user: null, isAuthenticated: false, error: null });
-        localStorage.removeItem("user");
+      },
+
+      updateUserState: (updatedUser) => {
+        set({ user: updatedUser });
       },
 
       clearError: () => set({ error: null }),
