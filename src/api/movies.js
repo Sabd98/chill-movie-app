@@ -1,34 +1,65 @@
-
-import { moviesData } from '../data/movies';
+import api from './apiRoot';
+import { getCurrentUsername, getSafeKey } from './user';
 
 export const getMovies = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(moviesData);
-    }, 500);
-  });
+  const response = await api.get('/movies.json');
+  return response.data;
 };
 
-export const updateUser = async (oldUsername, newData) => {
-  const users = JSON.parse(localStorage.getItem('app_users') || '[]');
-  const userIndex = users.findIndex(u => u.username === oldUsername);
-  
-  if (userIndex === -1) {
-    throw new Error('User tidak ditemukan');
-  }
 
-  if (newData.username && newData.username !== oldUsername) {
-    if (users.some(u => u.username === newData.username)) {
-      throw new Error('Username sudah digunakan');
+export const getMyList = async () => {
+  const username = getCurrentUsername();
+  if (!username) return [];
+
+  try {
+    const response = await api.get(`/chill_my_list/${getSafeKey(username)}.json`);
+    if (response.data) {
+      return Object.values(response.data);
     }
-    users[userIndex].username = newData.username;
+    return [];
+  } catch (error) {
+    console.error("Error fetching my list:", error);
+    return [];
   }
+};
 
-  if (newData.password) {
-    users[userIndex].password = newData.password;
+export const addToMyList = async (movie) => {
+  const username = getCurrentUsername();
+  if (!username) return false;
+
+  try {
+    const exists = await checkIsMyList(movie.id);
+    if (exists) return false;
+
+    await api.put(`/chill_my_list/${getSafeKey(username)}/${movie.id}.json`, movie);
+    window.dispatchEvent(new Event('myListUpdated'));
+    return true;
+  } catch (error) {
+    console.error("Error adding to list:", error);
+    return false;
   }
+};
 
-  localStorage.setItem('app_users', JSON.stringify(users));
-  
-  return { data: { username: users[userIndex].username, password: users[userIndex].password } };
+export const removeFromMyList = async (movieId) => {
+  const username = getCurrentUsername();
+  if (!username) return;
+
+  try {
+    await api.delete(`/chill_my_list/${getSafeKey(username)}/${movieId}.json`);
+    window.dispatchEvent(new Event('myListUpdated'));
+  } catch (error) {
+     console.error("Error removing from list:", error);
+  }
+};
+
+export const checkIsMyList = async (movieId) => {
+  const username = getCurrentUsername();
+  if (!username) return false;
+
+  try {
+    const response = await api.get(`/chill_my_list/${getSafeKey(username)}/${movieId}.json`);
+    return !!response.data;
+  } catch {
+    return false;
+  }
 };

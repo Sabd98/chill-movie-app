@@ -3,7 +3,7 @@ import { FileText, Pencil, PencilOff } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { useForm } from "../hooks/useForm";
 import { loginSchema } from "../utils/validation";
-import { updateUser } from "../api/movies";
+import { updateUser } from "../api/user";
 import Button from "../components/ui/Button";
 import "../styles/profile.css";
 

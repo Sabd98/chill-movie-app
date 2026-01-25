@@ -1,7 +1,20 @@
-
+import api from './apiRoot';
 
 const getUsers = async () => {
-  return JSON.parse(localStorage.getItem('app_users') || '[]');
+  try {
+    const response = await api.get('/users.json');
+    if (response.data) {
+      // Convert object to array for easier searching
+      return Object.entries(response.data).map(([key, value]) => ({
+        id: key,
+        ...value
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return []; // Return empty array on error or no data
+  }
 };
 
 export const loginUser = async (credentials) => {
@@ -28,9 +41,7 @@ export const registerUser = async (userData) => {
     password: userData.password
   };
 
-  const localUsers = JSON.parse(localStorage.getItem('app_users') || '[]');
-  localUsers.push(newUser);
-  localStorage.setItem('app_users', JSON.stringify(localUsers));
+  await api.post('/users.json', newUser);
 
   return newUser;
 };

@@ -1,9 +1,9 @@
 import { useFetch } from "../hooks/useFetch";
-import { getMovies } from "../api/movies";
 import Hero from "../components/home/Hero";
 import MovieSection from "../components/home/MovieSection";
 import MovieRow from "../components/home/MovieRow";
 import "../styles/content.css";
+import { getMovies } from "../api/movies";
 
 const Home = () => {
   const { fetchedData, loading } = useFetch(getMovies, {

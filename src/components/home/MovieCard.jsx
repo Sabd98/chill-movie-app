@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, ThumbsUp, ChevronDown, HeartPlus, HeartMinus } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { addToMyList, removeFromMyList, isInMyList } from '../../api/myList';
+import { addToMyList, removeFromMyList, checkIsMyList } from '../../api/movies';
 import Button from '../ui/Button';
 
 const MovieCard = ({ movie, orientation = 'vertical' }) => {
@@ -18,11 +18,15 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setInList(isInMyList(movieId));
+    const checkStatus = async () => {
+      const exists = await checkIsMyList(movieId);
+      setInList(exists);
+    };
+    
+    checkStatus();
     
     const handleUpdate = () => {
-      setInList(isInMyList(movieId));
+      checkStatus();
     };
     
     window.addEventListener('myListUpdated', handleUpdate);

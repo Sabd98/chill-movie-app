@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getMyList } from '../api/myList';
+import { getMyList } from '../api/movies';
 import { useFetch } from '../hooks/useFetch';
 import MovieCard from '../components/home/MovieCard';
 
