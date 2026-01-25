@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import useMyListStore from '../../store/myListStore';
 import Button from '../ui/Button';
 
-const MovieCard = ({ movie, orientation = 'vertical' }) => {
+const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const timeoutRef = useRef(null);
   const Motion = motion.div;
@@ -48,13 +48,20 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
     }
   };
 
+  const handleClick = () => {
+    if (onMovieClick) {
+      onMovieClick(movie);
+    }
+  };
+
   return (
     <Motion 
       className={`relative ${orientation === 'vertical' ? 'p-2!' : 'p-1!'}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       animate={{ zIndex: isHovered ? 9999 : 10 }}
-      transition={{ duration: 0.4, zIndex: { delay: isHovered ? 0 : 0.4 } }}
+      transition={{ duration: 0.3, zIndex: { delay: isHovered ? 0 : 0.3 } }}
+      onClick={handleClick}
     >
       <div className={`${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'} w-full`} />
 
@@ -90,7 +97,7 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
               className="bg-[#181818] p-4!"
             >
               <div className="flex items-center gap-2 mb-2!">

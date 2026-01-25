@@ -2,10 +2,13 @@ import { useFetch } from "../hooks/useFetch";
 import Hero from "../components/home/Hero";
 import MovieSection from "../components/home/MovieSection";
 import MovieRow from "../components/home/MovieRow";
+import MovieModal from "../components/ui/MovieModal";
+import useModalStore from "../store/modalStore";
 import "../styles/content.css";
 import { getMovies } from "../api/movies";
 
 const Home = () => {
+  const { openModal } = useModalStore();
   const { fetchedData, loading } = useFetch(getMovies, {
     continuing: [],
     topRating: [],
@@ -13,13 +16,17 @@ const Home = () => {
     newRelease: [],
   });
 
-  const handleMovieClick = (movie) => {
-    alert(`Membuka detail untuk: ${movie.title}`);
+  const handleMovieClick = (movie, orientation) => {
+    // Determine type based on orientation or section
+    // Horizontal usually means continuing/series in this context
+    const type = orientation === 'horizontal' ? 'series' : 'movie';
+    openModal(movie, type);
   };
 
   return (
     <main className="main-content bg-[#181a1c]">
       <Hero />
+      <MovieModal />
       <div className="relative! z-10! -mt-20!">
         {loading ? (
           <div
@@ -37,7 +44,7 @@ const Home = () => {
               >
                 <MovieRow
                   movies={fetchedData.continuing}
-                  onMovieClick={handleMovieClick}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'horizontal')}
                   orientation="horizontal"
                 />
               </MovieSection>
@@ -45,7 +52,7 @@ const Home = () => {
               <MovieSection title="Top Rating Film dan Series Hari ini">
                 <MovieRow
                   movies={fetchedData.topRating}
-                  onMovieClick={handleMovieClick}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
                   orientation="vertical"
                 />
               </MovieSection>
@@ -53,7 +60,7 @@ const Home = () => {
               <MovieSection title="Film Trending">
                 <MovieRow
                   movies={fetchedData.trending}
-                  onMovieClick={handleMovieClick}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
                   orientation="vertical"
                 />
               </MovieSection>
@@ -61,7 +68,7 @@ const Home = () => {
               <MovieSection title="Rilis Baru">
                 <MovieRow
                   movies={fetchedData.newRelease}
-                  onMovieClick={handleMovieClick}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
                   orientation="vertical"
                 />
               </MovieSection>
