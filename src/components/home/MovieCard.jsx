@@ -1,11 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, ThumbsUp, ChevronDown, HeartPlus, HeartMinus } from 'lucide-react';
-import { useState } from 'react';
+import { Play, ThumbsUp, ChevronDown, Plus, Minus } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 import useMyListStore from '../../store/myListStore';
 import Button from '../ui/Button';
 
 const MovieCard = ({ movie, orientation = 'vertical' }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const timeoutRef = useRef(null);
   const Motion = motion.div;
   const movieId = movie.id || movie.title;
 
@@ -19,6 +20,25 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
     genres: movie.genres || (orientation === 'vertical' ? ['Aksi', 'Drama'] : ['Aksi'])
   };
 
+  const handleMouseEnter = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsHovered(true);
+    }, 400);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsHovered(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const handleToggleList = (e) => {
     e.stopPropagation();
     if (inList) {
@@ -29,20 +49,25 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
   };
 
   return (
-    <div 
-      className={`relative z-10 ${orientation === 'vertical' ? 'p-2!' : 'p-1!'}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+    <Motion 
+      className={`relative ${orientation === 'vertical' ? 'p-2!' : 'p-1!'}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      animate={{ zIndex: isHovered ? 9999 : 10 }}
+      transition={{ duration: 0.4, zIndex: { delay: isHovered ? 0 : 0.4 } }}
     >
+      <div className={`${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'} w-full`} />
+
       <Motion
-        className={`relative cursor-pointer bg-[#181818] rounded-lg overflow-hidden shadow-lg ${isHovered ? 'z-50 shadow-2xl ' : 'z-10'}`}
+        className={`absolute top-0 left-0 w-full cursor-pointer bg-[#181818] rounded-md overflow-hidden shadow-lg`}
+        layout
         initial={{ scale: 1 }}
-        whileHover={{ 
-          scale: 1.05,
-          transition: { duration: 0.3, ease: "easeOut" }
+        animate={{ 
+          scale: isHovered ? 1.5 : 1, 
         }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
       >
-        <div className={`relative transition-all duration-300 ${isHovered ? 'aspect-video' : (orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video')}`}>
+        <div className={`relative w-full h-full ${isHovered ? 'aspect-video' : (orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video')}`}>
           {movie.badge && (
             <div className={`absolute top-2! left-2! px-2! py-1! rounded text-[10px] font-bold z-10 ${
               movie.badge.type === 'top' 
@@ -55,20 +80,20 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
           <img 
             src={movie.image} 
             alt={movie.title} 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover block"
           />
         </div>
 
         <AnimatePresence>
           {isHovered && (
             <Motion
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-[#181818] p-4! border-t border-gray-800"
+              className="bg-[#181818] p-4!"
             >
-              <div className="flex items-center gap-2 mb-4!">
+              <div className="flex items-center gap-2 mb-2!">
                 <Button variant="icon-play" className="scale-90">
                   <Play size={18} fill="black" />
                 </Button>
@@ -77,7 +102,7 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
                   onClick={handleToggleList}
                   className="scale-90"
                 >
-                  {inList ? <HeartMinus size={18} /> : <HeartPlus size={18} />}
+                  {inList ? <Minus size={18} /> : <Plus size={18} />}
                 </Button>
                 <Button variant="icon-outline" className="scale-90">
                   <ThumbsUp size={16} />
@@ -90,9 +115,9 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
               <div className="text-white">
                 <div className="flex items-center gap-2 text-[10px] font-bold mb-1!">
                   <span className="text-green-500">{displayInfo.match}</span>
-                  <span className="border border-gray-500 px-1">{displayInfo.ageRating}</span>
+                  <span className="border border-gray-500 px-1! rounded-lg">{displayInfo.ageRating}</span>
                   <span>{displayInfo.episodes}</span>
-                  <span className="border border-gray-500 px-1 text-[8px]">HD</span>
+                  <span className="border border-gray-500 px-1! rounded-lg text-[8px]">HD</span>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[10px] text-gray-400">
                   {displayInfo.genres.map((genre, idx) => (
@@ -106,7 +131,7 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
           )}
         </AnimatePresence>
       </Motion>
-    </div>
+    </Motion>
   );
 };
 

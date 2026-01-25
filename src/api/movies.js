@@ -1,5 +1,6 @@
+import { getSafeKey } from '../utils/crypto';
 import api from './apiRoot';
-import { getCurrentUsername, getSafeKey } from './user';
+import { getCurrentUsername } from './user';
 
 export const getMovies = async () => {
   const response = await api.get('/movies.json');

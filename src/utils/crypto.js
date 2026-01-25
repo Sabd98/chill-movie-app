@@ -31,3 +31,7 @@ export const decryptPassword = (encryptedPassword) => {
     return "";
   }
 };
+
+export const getSafeKey = (key) => {
+    return btoa(key); 
+}

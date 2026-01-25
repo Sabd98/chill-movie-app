@@ -7,10 +7,6 @@ export const getCurrentUsername = () => {
   return user ? user.username : null;
 };
 
-export const getSafeKey = (key) => {
-    return btoa(key); 
-}
-
 export const updateUser = async (oldUsername, newData) => {
   const response = await api.get('/users.json');
   const usersMap = response.data || {};
