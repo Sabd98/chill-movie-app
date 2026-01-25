@@ -3,12 +3,12 @@ import { useForm } from '../hooks/useForm';
 import { registerSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useAuth } from '../hooks/useAuth';
+import useAuthStore from '../store/authStore';
 import '../styles/auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, loading, error, clearError } = useAuth();
+  const { register, loading, error, clearError } = useAuthStore();
   
   const { values, errors, handleChange, handleBlur, validate } = useForm(
     { username: '', password: '', confirmPassword: '' },

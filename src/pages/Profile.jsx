@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FileText, Pencil, PencilOff } from "lucide-react";
-import { useAuth } from "../hooks/useAuth";
+import useAuthStore from "../store/authStore";
 import { useForm } from "../hooks/useForm";
 import { loginSchema } from "../utils/validation";
 import { updateUser } from "../api/user";
@@ -8,7 +8,7 @@ import Button from "../components/ui/Button";
 import "../styles/profile.css";
 
 const Profile = () => {
-  const { user, updateUserState } = useAuth();
+  const { user, updateUserState } = useAuthStore();
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [updateMessage, setUpdateMessage] = useState({ type: "", text: "" });

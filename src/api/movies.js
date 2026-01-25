@@ -28,11 +28,13 @@ export const addToMyList = async (movie) => {
   if (!username) return false;
 
   try {
-    const exists = await checkIsMyList(movie.id);
-    if (exists) return false;
-
+    // Check keberadaan via API (opsional jika store sudah handle, tapi bagus untuk safety)
+    // Atau kita percayakan pada store untuk cek duplikasi di state lokal
+    // Untuk efisiensi, kita bisa skip checkIsMyList request jika kita yakin state sinkron,
+    // tapi untuk safety backend, PUT request biasanya idempotent.
+    // Firebase RTDB PUT akan overwrite, jadi aman.
+    
     await api.put(`/chill_my_list/${getSafeKey(username)}/${movie.id}.json`, movie);
-    window.dispatchEvent(new Event('myListUpdated'));
     return true;
   } catch (error) {
     console.error("Error adding to list:", error);
@@ -46,9 +48,9 @@ export const removeFromMyList = async (movieId) => {
 
   try {
     await api.delete(`/chill_my_list/${getSafeKey(username)}/${movieId}.json`);
-    window.dispatchEvent(new Event('myListUpdated'));
   } catch (error) {
      console.error("Error removing from list:", error);
+     throw error; // Lempar error agar store tahu kalau gagal
   }
 };
 

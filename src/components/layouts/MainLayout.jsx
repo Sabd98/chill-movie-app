@@ -1,10 +1,19 @@
 import { Outlet } from "react-router";
-import { useAuth } from "../../hooks/useAuth";
+import useMyListStore from "../../store/myListStore";
+import { useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import useAuthStore from "../../store/authStore";
 
 const MainLayout = () => {
-  const { logout } = useAuth();
+  const { logout, isAuthenticated } = useAuthStore();
+  const { fetchMyList } = useMyListStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchMyList();
+    }
+  }, [isAuthenticated, fetchMyList]);
 
   return (
     <>

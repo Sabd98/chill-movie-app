@@ -1,14 +1,17 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, ThumbsUp, ChevronDown, HeartPlus, HeartMinus } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { addToMyList, removeFromMyList, checkIsMyList } from '../../api/movies';
+import { useState } from 'react';
+import useMyListStore from '../../store/myListStore';
 import Button from '../ui/Button';
 
 const MovieCard = ({ movie, orientation = 'vertical' }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [inList, setInList] = useState(false);
   const Motion = motion.div;
   const movieId = movie.id || movie.title;
+
+  // Global state selector untuk reaktivitas
+  const inList = useMyListStore(state => state.myList.some(m => m.id === movieId));
+  const { addMovie, removeMovie } = useMyListStore();
 
   const displayInfo = {
     match: movie.match || `${90 + (String(movieId).length % 10)}% Match`,
@@ -17,28 +20,12 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
     genres: movie.genres || (orientation === 'vertical' ? ['Aksi', 'Drama'] : ['Aksi'])
   };
 
-  useEffect(() => {
-    const checkStatus = async () => {
-      const exists = await checkIsMyList(movieId);
-      setInList(exists);
-    };
-    
-    checkStatus();
-    
-    const handleUpdate = () => {
-      checkStatus();
-    };
-    
-    window.addEventListener('myListUpdated', handleUpdate);
-    return () => window.removeEventListener('myListUpdated', handleUpdate);
-  }, [movieId]);
-
   const handleToggleList = (e) => {
     e.stopPropagation();
     if (inList) {
-      removeFromMyList(movieId);
+      removeMovie(movieId);
     } else {
-      addToMyList({ ...movie, id: movieId });
+      addMovie({ ...movie, id: movieId });
     }
   };
 
@@ -101,27 +88,24 @@ const MovieCard = ({ movie, orientation = 'vertical' }) => {
                 </Button>
               </div>
 
-              <div className="flex items-center gap-2 mb-3!">
-                <span className="text-[#46d369] font-bold text-[14px]">{displayInfo.match}</span>
-                <span className="border border-gray-500 px-1.5! py-0.5! rounded text-[10px] text-gray-200 font-medium">
-                  {displayInfo.ageRating}
-                </span>
-                <span className="text-gray-200 font-medium text-[12px]">{displayInfo.episodes}</span>
-                <span className="border border-gray-500 px-1! py-0.5! rounded text-[8px] text-gray-200 font-bold">HD</span>
-              </div>
-
-              <div className="text-[13px] text-white font-medium">
-                {displayInfo.genres.join(' • ')}
+              <div className="text-white">
+                <div className="flex items-center gap-2 text-[10px] font-bold mb-1!">
+                  <span className="text-green-500">{displayInfo.match}</span>
+                  <span className="border border-gray-500 px-1">{displayInfo.ageRating}</span>
+                  <span>{displayInfo.episodes}</span>
+                  <span className="border border-gray-500 px-1 text-[8px]">HD</span>
+                </div>
+                <div className="flex flex-wrap gap-2 text-[10px] text-gray-400">
+                  {displayInfo.genres.map((genre, idx) => (
+                    <span key={idx} className="relative [&:not(:last-child)]:after:content-['•'] [&:not(:last-child)]:after:ml-2 [&:not(:last-child)]:after:text-gray-600">
+                      {genre}
+                    </span>
+                  ))}
+                </div>
               </div>
             </Motion>
           )}
         </AnimatePresence>
-        
-        {!isHovered && (
-          <div className="p-2! truncate text-white text-[11px] font-medium">
-            {movie.title}
-          </div>
-        )}
       </Motion>
     </div>
   );

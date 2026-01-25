@@ -4,7 +4,6 @@ const getUsers = async () => {
   try {
     const response = await api.get('/users.json');
     if (response.data) {
-      // Convert object to array for easier searching
       return Object.entries(response.data).map(([key, value]) => ({
         id: key,
         ...value
@@ -13,7 +12,7 @@ const getUsers = async () => {
     return [];
   } catch (error) {
     console.error("Error fetching users:", error);
-    return []; // Return empty array on error or no data
+    return []; 
   }
 };
 

@@ -3,12 +3,12 @@ import { useForm } from '../hooks/useForm';
 import { loginSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useAuth } from '../hooks/useAuth';
+import useAuthStore from '../store/authStore';
 import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading, error, clearError } = useAuth();
+  const { login, loading, error, clearError } = useAuthStore();
   
   const { values, errors, handleChange, handleBlur, validate } = useForm(
     { username: '', password: '' },
