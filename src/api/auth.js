@@ -24,7 +24,7 @@ export const loginUser = async (credentials) => {
   const user = users.find(u => u.username === credentials.username && u.password === encryptedPassword);
   
   if (user) {
-    return { data: { username: user.username, password: user.password } };
+    return { data: user };
   } else {
     throw new Error('Username atau password salah');
   }

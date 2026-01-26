@@ -108,7 +108,7 @@ const Header = ({ onLogout }) => {
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate('/profile'); }}>
                     <User size={16} /> Profil Saya
                   </a>
-                  <a href="#" onClick={(e) => e.preventDefault()}>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/subscription'); }}>
                     <Star size={16} /> Ubah Premium
                   </a>
                   <a

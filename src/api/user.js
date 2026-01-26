@@ -32,8 +32,8 @@ export const updateUser = async (oldUsername, newData) => {
 
   return { 
     data: { 
-      username: newData.username || targetUser.username, 
-      password: updates.password || targetUser.password 
+      ...targetUser,
+      ...updates
     } 
   };
 };
