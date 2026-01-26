@@ -2,7 +2,7 @@ import { useFetch } from "../hooks/useFetch";
 import Hero from "../components/home/Hero";
 import MovieSection from "../components/home/MovieSection";
 import MovieRow from "../components/home/MovieRow";
-import MovieModal from "../components/ui/MovieModal";
+import MovieModal from "../components/ui/Modal";
 import useModalStore from "../store/modalStore";
 import "../styles/content.css";
 import { getMovies } from "../api/movies";

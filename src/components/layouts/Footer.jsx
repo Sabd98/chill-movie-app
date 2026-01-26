@@ -32,7 +32,7 @@ const Footer = () => {
         <div className="desktop-footer grid grid-cols-[1fr_2fr_2fr] gap-12 items-center">
           <div className="text-center md:text-left flex flex-col items-center md:items-start ">
             <img src="/Logo.png" alt="Logo" className="h-10" />
-            <p className="text-[#b3b3b3] text-[0.9rem] mt-4!">©2023 Chill All Rights Reserved</p>
+            <p className="text-[#b3b3b3] text-[0.9rem] mt-4!">©{new Date().getFullYear()} Chill All Rights Reserved</p>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <div>
