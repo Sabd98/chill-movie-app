@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import '../../styles/footer.css';
+import { genres, helpLinks } from '../../data/movies';
 
 const FooterAccordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,7 @@ const FooterAccordion = ({ title, children }) => {
   );
 };
 
+
 const Footer = () => {
   return (
     <footer className="footer bg-[#1a1a1a] border-t border-[#333333]">
@@ -38,35 +40,26 @@ const Footer = () => {
             <div>
               <h4 className="footer-section-title">Genre</h4>
               <ul className="footer-list">
-                <li><a href="#" className="footer-link">Aksi</a></li>
-                <li><a href="#" className="footer-link">Anak-anak</a></li>
-                <li><a href="#" className="footer-link">Anime</a></li>
-                <li><a href="#" className="footer-link">Britania</a></li>
-                <li><a href="#" className="footer-link">Komedi</a></li>
-                <li><a href="#" className="footer-link">Petualangan</a></li>
-                <li><a href="#" className="footer-link">Perang</a></li>
-                <li><a href="#" className="footer-link">Romantis</a></li>
+                {genres.slice(0, 8).map((genre, index) => (
+                  <li key={index}><a href="#" className="footer-link">{genre}</a></li>
+                ))}
               </ul>
             </div>
             <div>
               <h4 className="footer-section-title"></h4>
               <ul className="footer-list">
-                <li><a href="#" className="footer-link">Drama</a></li>
-                <li><a href="#" className="footer-link">Fantasi Ilmiah & Fantasi</a></li>
-                <li><a href="#" className="footer-link">Kejahatan</a></li>
-                <li><a href="#" className="footer-link">KDrama</a></li>
-                <li><a href="#" className="footer-link">Sains & Alam</a></li>
-                <li><a href="#" className="footer-link">Thriller</a></li>
+                {genres.slice(8).map((genre, index) => (
+                  <li key={index}><a href="#" className="footer-link">{genre}</a></li>
+                ))}
               </ul>
             </div>
           </div>
           <div>
             <h4 className="footer-section-title">Bantuan</h4>
             <ul className="footer-list">
-              <li><a href="#" className="footer-link">FAQ</a></li>
-              <li><a href="#" className="footer-link">Kontak Kami</a></li>
-              <li><a href="#" className="footer-link">Privasi</a></li>
-              <li><a href="#" className="footer-link">Syarat & Ketentuan</a></li>
+              {helpLinks.map((link, index) => (
+                <li key={index}><a href="#" className="footer-link">{link}</a></li>
+              ))}
             </ul>
           </div>
         </div>
@@ -80,28 +73,16 @@ const Footer = () => {
           <div className="footer-mobile-accordion">
             <FooterAccordion title="Genre">
               <ul>
-                <li><a href="#" className="footer-mobile-link">Aksi</a></li>
-                <li><a href="#" className="footer-mobile-link">Drama</a></li>
-                <li><a href="#" className="footer-mobile-link">Anak-anak</a></li>
-                <li><a href="#" className="footer-mobile-link">Fantasi Ilmiah & Fantasi</a></li>
-                <li><a href="#" className="footer-mobile-link">Anime</a></li>
-                <li><a href="#" className="footer-mobile-link">Kejahatan</a></li>
-                <li><a href="#" className="footer-mobile-link">Britania</a></li>
-                <li><a href="#" className="footer-mobile-link">KDrama</a></li>
-                <li><a href="#" className="footer-mobile-link">Komedi</a></li>
-                <li><a href="#" className="footer-mobile-link">Sains & Alam</a></li>
-                <li><a href="#" className="footer-mobile-link">Petualangan</a></li>
-                <li><a href="#" className="footer-mobile-link">Thriller</a></li>
-                <li><a href="#" className="footer-mobile-link">Perang</a></li>
-                <li><a href="#" className="footer-mobile-link">Romantis</a></li>
+                {genres.map((genre, index) => (
+                  <li key={index}><a href="#" className="footer-mobile-link">{genre}</a></li>
+                ))}
               </ul>
             </FooterAccordion>
             <FooterAccordion title="Bantuan">
               <ul>
-                <li><a href="#" className="footer-mobile-link">FAQ</a></li>
-                <li><a href="#" className="footer-mobile-link">Kontak Kami</a></li>
-                <li><a href="#" className="footer-mobile-link">Privasi</a></li>
-                <li><a href="#" className="footer-mobile-link">Syarat & Ketentuan</a></li>
+                {helpLinks.map((link, index) => (
+                  <li key={index}><a href="#" className="footer-mobile-link">{link}</a></li>
+                ))}
               </ul>
             </FooterAccordion>
           </div>

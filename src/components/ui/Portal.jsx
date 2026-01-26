@@ -29,7 +29,7 @@ const Portal = ({ children, className = '' }) => {
   if (!container) return null;
 
   return createPortal(
-    <div className={className} style={{ position: 'relative', zIndex: 'auto' }}>
+    <div className={`${className} relative z-auto pointer-events-auto`}>
       {children}
     </div>, 
     container

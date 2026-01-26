@@ -59,3 +59,23 @@ export const checkIsMyList = async (movieId) => {
     return false;
   }
 };
+
+export const getEpisodes = async () => {
+  try {
+    const response = await api.get('/episodes.json');
+    return response.data || [];
+  } catch (error) {
+    console.error("Error fetching episodes:", error);
+    return [];
+  }
+};
+
+export const getRecommendations = async () => {
+  try {
+    const response = await api.get('/recommendations.json');
+    return response.data || [];
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    return [];
+  }
+};

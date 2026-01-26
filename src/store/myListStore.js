@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { getMyList, addToMyList, removeFromMyList } from '../api/movies';
+import { create } from "zustand";
+import { getMyList, addToMyList, removeFromMyList } from "../api/movies";
 
 const useMyListStore = create((set, get) => ({
   myList: [],
@@ -18,7 +18,7 @@ const useMyListStore = create((set, get) => ({
 
   addMovie: async (movie) => {
     const currentList = get().myList;
-    if (currentList.some(m => m.id === movie.id)) return; 
+    if (currentList.some((m) => m.id === movie.id)) return;
 
     set({ myList: [...currentList, movie] });
 
@@ -28,14 +28,14 @@ const useMyListStore = create((set, get) => ({
         set({ myList: currentList });
       }
     } catch (error) {
-       console.error("Failed to add movie to list", error);
-       set({ myList: currentList });
+      console.error("Failed to add movie to list", error);
+      set({ myList: currentList });
     }
   },
 
   removeMovie: async (movieId) => {
     const currentList = get().myList;
-    
+
     set({ myList: currentList.filter((m) => m.id !== movieId) });
 
     try {
@@ -47,8 +47,8 @@ const useMyListStore = create((set, get) => ({
   },
 
   isInList: (movieId) => {
-      return get().myList.some(m => m.id === movieId);
-  }
+    return get().myList.some((m) => m.id === movieId);
+  },
 }));
 
 export default useMyListStore;

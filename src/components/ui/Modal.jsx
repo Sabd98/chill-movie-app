@@ -2,56 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Plus, Volume2, VolumeX, Minus } from 'lucide-react';
 import useModalStore from '../../store/modalStore';
 import Button from './Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useMyListStore from '../../store/myListStore';
 import Portal from './Portal';
-
-const MOCK_EPISODES = [
-  { 
-    id: 1, 
-    title: 'Pilot', 
-    duration: '30 min', 
-    desc: 'American football coach Ted Lasso is hired by a wealthy divorcee to coach the English soccer team AFC Richmond.', 
-    image: '/images/image 233.png' 
-  },
-  { 
-    id: 2, 
-    title: 'Biscuits', 
-    duration: '29 min', 
-    desc: "It's Ted's first day of coaching, and fans aren't happy. He makes little headway but remains undeterred as the team.", 
-    image: '/images/image 232.png' 
-  },
-  { 
-    id: 3, 
-    title: 'Trent Crimm: Independent', 
-    duration: '30 min', 
-    desc: 'To arrange an in-depth exposé, Rebecca pairs cynical journalist Trent Crimm with Ted for a day. Ted and Roy...', 
-    image: '/images/image 235.png' 
-  },
-  { 
-    id: 4, 
-    title: 'For The Children', 
-    duration: '33 min', 
-    desc: 'Rebecca hosts the team\'s annual charity benefit, where Ted stages a reconciliation between Roy and Jamie.', 
-    image: '/images/image 222.png' 
-  },
-  { 
-    id: 5, 
-    title: 'Tan Lines', 
-    duration: '31 min', 
-    desc: 'With his wife and son visiting from America, Ted makes drastic changes to the lineup during a critical match.', 
-    image: '/images/image 221.png' 
-  },
-];
-
-const MOCK_RECOMMENDATIONS = [
-  { id: 1, image: '/images/image 21.png', match: '98%' },
-  { id: 2, image: '/images/image 212.png', match: '96%' },
-  { id: 3, image: '/images/Frame 77.png', match: '95%' },
-  { id: 4, image: '/images/image11.png', match: '94%' },
-  { id: 5, image: '/images/image 210.png', match: '90%' },
-  { id: 6, image: '/images/image 215.png', match: '88%' },
-];
+import { getEpisodes, getRecommendations } from '../../api/movies';
 
 const MovieModal = () => {
   const { isOpen, content, type, closeModal } = useModalStore();
@@ -62,11 +16,23 @@ const MovieModal = () => {
   const { addMovie, removeMovie } = useMyListStore();
 
   const [isMuted, setIsMuted] = useState(true);
+  const [episodes, setEpisodes] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   const Motion = motion.div;
 
   const isSeries = type === 'series';
 
-    const handleToggleList = (e) => {
+  useEffect(() => {
+    if (isOpen && content) {
+      if (isSeries) {
+        getEpisodes().then(data => setEpisodes(data || []));
+      } else {
+        getRecommendations().then(data => setRecommendations(data || []));
+      }
+    }
+  }, [isOpen, content, isSeries]);
+
+  const handleToggleList = (e) => {
     e.stopPropagation();
     if (inList) {
       removeMovie(movieId);
@@ -84,7 +50,7 @@ const MovieModal = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeModal}
-            className="fixed inset-0 z-[2000] flex items-center justify-center p-4! bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[2000] flex items-center justify-center p-4! bg-black/60 backdrop-blur-sm pointer-events-auto"
           >
             <Motion
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -158,7 +124,7 @@ const MovieModal = () => {
                         <span className="text-white/60 text-sm">Season 1</span>
                       </div>
                       <div className="space-y-4!">
-                        {MOCK_EPISODES.map((ep) => (
+                        {episodes.map((ep) => (
                           <div key={ep.id} className="flex gap-4! p-4! hover:bg-[#22282A] rounded-lg transition-colors group cursor-pointer border-b border-gray-800 last:border-0">
                             <div className="text-2xl font-bold text-gray-500 self-center w-8">{ep.id}</div>
                             <div className="relative w-32 aspect-video flex-shrink-0 rounded overflow-hidden">
@@ -179,11 +145,10 @@ const MovieModal = () => {
                       </div>
                     </div>
                   ) : (
-                    /* Movie Layout: Recommendations */
                     <div className="mt-8!">
                       <h3 className="text-xl font-bold text-white mb-4!">Rekomendasi Serupa</h3>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4!">
-                        {MOCK_RECOMMENDATIONS.map((rec) => (
+                        {recommendations.map((rec) => (
                           <div key={rec.id} className="bg-[#22282A] rounded-lg overflow-hidden group cursor-pointer">
                             <div className="relative aspect-[2/3]">
                               <img src={rec.image} alt="Recommendation" className="w-full h-full object-cover" />
