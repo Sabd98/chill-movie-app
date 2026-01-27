@@ -12,7 +12,6 @@ const Input = ({
   className = '',
   containerClassName = '',
   showPasswordToggle = true,
-  showErrorMessage = true,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +38,7 @@ const Input = ({
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </span>
       )}
-      {error && showErrorMessage && (
+      {error  && (
         <div className="text-[#ff4444] text-sm !mt-1.5 !ml-4 text-left font-medium animate-pulse">
           {error}
         </div>
