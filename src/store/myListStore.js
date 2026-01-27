@@ -15,7 +15,6 @@ const useMyListStore = create((set, get) => ({
       set({ error: err.message, loading: false });
     }
   },
-
   addMovie: async (movie) => {
     const currentList = get().myList;
     if (currentList.some((m) => m.id === movie.id)) return;
@@ -32,7 +31,6 @@ const useMyListStore = create((set, get) => ({
       set({ myList: currentList });
     }
   },
-
   removeMovie: async (movieId) => {
     const currentList = get().myList;
 
@@ -46,9 +44,6 @@ const useMyListStore = create((set, get) => ({
     }
   },
 
-  isInList: (movieId) => {
-    return get().myList.some((m) => m.id === movieId);
-  },
 }));
 
 export default useMyListStore;

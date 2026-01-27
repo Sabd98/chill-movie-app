@@ -25,7 +25,6 @@ const useFormStore = create(
           // simpler approach: just trust persistence. If user wants to reset, they call reset.
         }
       },
-
       setFieldValue: (formId, field, value) => {
         set((state) => ({
           forms: {
@@ -40,19 +39,6 @@ const useFormStore = create(
           },
         }));
       },
-
-      setValues: (formId, values) => {
-        set((state) => ({
-          forms: {
-            ...state.forms,
-            [formId]: {
-              ...state.forms[formId],
-              values: values,
-            },
-          },
-        }));
-      },
-
       resetForm: (formId, initialValues) => {
         set((state) => ({
           forms: {
@@ -62,14 +48,6 @@ const useFormStore = create(
             },
           },
         }));
-      },
-
-      removeForm: (formId) => {
-        set((state) => {
-          const newForms = { ...state.forms };
-          delete newForms[formId];
-          return { forms: newForms };
-        });
       },
     }),
     {

@@ -48,18 +48,6 @@ export const removeFromMyList = async (movieId) => {
   }
 };
 
-export const checkIsMyList = async (movieId) => {
-  const username = getCurrentUsername();
-  if (!username) return false;
-
-  try {
-    const response = await api.get(`/chill_my_list/${getSafeKey(username)}/${movieId}.json`);
-    return !!response.data;
-  } catch {
-    return false;
-  }
-};
-
 export const getEpisodes = async () => {
   try {
     const response = await api.get('/episodes.json');
