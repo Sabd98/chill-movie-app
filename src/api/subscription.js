@@ -57,7 +57,6 @@ export const subscribeToPlan = async (username, planId) => {
       endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString(), // 1 bulan
     };
 
-    // 4. Update User di Firebase
     await api.patch(`/users/${user.id}.json`, { subscription: subscriptionData });
 
     return { success: true, message: "Berhasil berlangganan!", data: subscriptionData };

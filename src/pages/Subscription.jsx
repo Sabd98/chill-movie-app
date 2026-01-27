@@ -1,32 +1,21 @@
-import { useState, useEffect } from "react";
+import {  useCallback } from "react";
 import { Check, Download, Monitor, Smartphone, X } from "lucide-react";
 import useAuthStore from "../store/authStore";
 import { getSubscriptionPlans } from "../api/subscription";
+import { useFetch } from "../hooks/useFetch";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router";
 
 const Subscription = () => {
   const { subscribe, loading } = useAuthStore();
-  const [plans, setPlans] = useState([]);
-  const [isLoadingPlans, setIsLoadingPlans] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const response = await getSubscriptionPlans();
-        setPlans(response.data);
-      } catch (err) {
-        console.error(err);
-        setError("Gagal memuat paket berlangganan. Silakan coba lagi nanti.");
-      } finally {
-        setIsLoadingPlans(false);
-      }
-    };
-
-    fetchPlans();
+  const fetchPlans = useCallback(async () => {
+    const response = await getSubscriptionPlans();
+    return response.data;
   }, []);
+
+  const { fetchedData: plans, loading: isLoadingPlans, error } = useFetch(fetchPlans);
 
   const handleSubscribe = async (planId) => {
     const result = await subscribe(planId);
@@ -44,10 +33,9 @@ const Subscription = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#181a1c] pt-[120px]! pb-20!">
-      <div className="w-full max-w-[1920px] mx-auto px-4!">
+    <main className="min-h-screen bg-[#181a1c] pt-[120px]! pb-20!">
+      <section className="w-full max-w-[1920px] mx-auto px-4!">
         
-        {/* Header Section */}
         <div className="text-center mb-16!">
           <h1 className="text-3xl font-bold text-white mb-12!">Kenapa Harus Berlangganan?</h1>
           
@@ -79,7 +67,6 @@ const Subscription = () => {
           </div>
         </div>
 
-        {/* Plans Section */}
         <div className="max-w-6xl mx-auto! px-4!">
           <div className="text-center mb-10!">
             <h2 className="text-2xl font-bold text-white mb-2!">Pilih Paketmu</h2>
@@ -102,13 +89,11 @@ const Subscription = () => {
                   {plan.name}
                 </div>
 
-                {/* Price Info */}
                 <div className="text-white mb-8!">
                   <p className="text-base mb-1!">Mulai dari Rp{plan.price.toLocaleString('id-ID')}/{plan.period}</p>
                   <p className="text-sm text-gray-200">{plan.maxUsers} Akun</p>
                 </div>
 
-                {/* Features List */}
                 <div className="flex-1 space-y-4! mb-8!">
                   {plan.features.map((feature, idx) => (
                     <div key={idx} className="flex items-start text-white text-sm">
@@ -118,7 +103,6 @@ const Subscription = () => {
                   ))}
                 </div>
 
-                {/* Subscribe Button */}
                 <div className="mt-auto">
                   <Button
                     variant="custom"
@@ -137,8 +121,8 @@ const Subscription = () => {
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

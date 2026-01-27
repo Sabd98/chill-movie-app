@@ -6,6 +6,7 @@ import { loginSchema } from "../utils/validation";
 import { updateUser } from "../api/user";
 import { decryptPassword } from "../utils/crypto";
 import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
 import { useNavigate } from "react-router";
 import "../styles/profile.css";
 
@@ -62,7 +63,7 @@ const Profile = () => {
       <div className="w-full max-w-6xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-white mb-8! text-center">Profil Saya</h2>
 
-        <div className="profile-content">
+        <section className="profile-content">
           <div className="profile-left">
             <div className="profile-pic-section mb-8!">
               <img
@@ -89,13 +90,15 @@ const Profile = () => {
               <div className="form-group mb-6!">
                 <label className="form-label mb-2!">Nama Pengguna</label>
                 <div className="input-wrapper">
-                  <input
+                  <Input
                     type="text"
                     name="username"
                     value={values.username}
                     onChange={handleChange}
                     disabled={!isEditingUsername}
-                    className={`profile-input ${errors.username ? "border-red-500" : ""}`}
+                    error={errors.username}
+                    className={`profile-input rounded-lg! bg-white/5! border-[1px]! pr-[40px]! ${errors.username ? "" : "border-white/10!"}`}
+                    containerClassName="mb-0!"
                   />
                   {isEditingUsername? <PencilOff
                     size={20}
@@ -118,14 +121,17 @@ const Profile = () => {
               <div className="form-group mb-8!">
                 <label className="form-label mb-2!">Kata Sandi</label>
                 <div className="input-wrapper">
-                  <input
+                  <Input
                     type="password"
                     name="password"
                     value={values.password}
                     placeholder="Ubah Kata Sandi"
                     onChange={handleChange}
                     disabled={!isEditingPassword}
-                    className={`profile-input ${errors.password ? "border-red-500" : ""}`}
+                    error={errors.password}
+                    showPasswordToggle={false}
+                    className={`profile-input rounded-lg! bg-white/5! border-[1px]! pr-[40px]! ${errors.password ? "" : "border-white/10!"}`}
+                    containerClassName="mb-0!"
                   />
                   {isEditingPassword ? <PencilOff
                     size={20}
@@ -138,11 +144,7 @@ const Profile = () => {
                   />}
                   
                 </div>
-                {errors.password && (
-                  <span className="text-red-500 text-xs mt-1!">
-                    {errors.password}
-                  </span>
-                )}
+               
               </div>
 
               {updateMessage.text && (
@@ -212,7 +214,7 @@ const Profile = () => {
               </div>
             )}
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );

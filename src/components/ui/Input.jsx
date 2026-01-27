@@ -9,14 +9,18 @@ const Input = ({
   onChange, 
   onBlur,
   error,
-  className = ''
+  className = '',
+  containerClassName = '',
+  showPasswordToggle = true,
+  showErrorMessage = true,
+  ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
   const inputType = isPassword && showPassword ? 'text' : type;
 
   return (
-    <div className="field relative w-full mb-4">
+    <div className={`field relative w-full mb-4 ${containerClassName}`}>
       <input
         type={inputType}
         name={name}
@@ -25,8 +29,9 @@ const Input = ({
         onChange={onChange}
         onBlur={onBlur}
         className={`w-full h-[50px] px-4 py-3 bg-[#333] border-2 rounded-full text-white text-base outline-none transition-colors duration-300 ${error ? '!border-[#ff4444] error' : 'border-[#444]'} ${className}`}
+        {...props}
       />
-      {isPassword && (
+      {isPassword && showPasswordToggle && (
         <span 
           className="absolute top-[48px] -translate-y-1/2 right-4 cursor-pointer text-[#ccc] transition-colors duration-300 hover:text-white"
           onClick={() => setShowPassword(!showPassword)}
@@ -34,7 +39,7 @@ const Input = ({
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </span>
       )}
-      {error && (
+      {error && showErrorMessage && (
         <div className="text-[#ff4444] text-sm !mt-1.5 !ml-4 text-left font-medium animate-pulse">
           {error}
         </div>

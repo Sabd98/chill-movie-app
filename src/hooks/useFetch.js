@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 
-export function useFetch(fetcher, initialData = []) {
+export function useFetch(fetcher, initialData = [], options = {}) {
+  const { enabled = true } = options;
   const [fetchedData, setFetchedData] = useState(initialData);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(enabled);
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
-    
+    if (!enabled) return;
+
     try {
       setLoading(true);
       setError(null);
@@ -18,11 +20,19 @@ export function useFetch(fetcher, initialData = []) {
     } finally {
       setLoading(false);
     }
-  }, [fetcher]);
+  }, [fetcher, enabled]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+ 
+  useEffect(() => {
+    if (!enabled) {
+      setFetchedData(initialData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
 
   return { fetchedData, loading, error, fetchData };
 }

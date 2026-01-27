@@ -35,16 +35,16 @@ const MyList = () => {
         <h1 className="text-3xl font-bold text-white mb-10!">Daftar Saya</h1>
         
         {myList.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-40 text-gray-500">
+          <section className="flex flex-col items-center justify-center py-40 text-gray-500">
             <p className="text-xl font-medium">Belum ada film di daftar kamu.</p>
             <p className="mt-2">Mulai tambahkan film favoritmu!</p>
-          </div>
+          </section>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-20">
+          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-20">
             {myList.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
-          </div>
+          </section>
         )}
       </div>
     </main>

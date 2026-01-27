@@ -2,10 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Plus, Volume2, VolumeX, Minus } from 'lucide-react';
 import useModalStore from '../../store/modalStore';
 import Button from './Button';
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import useMyListStore from '../../store/myListStore';
 import Portal from './Portal';
 import { getEpisodes, getRecommendations } from '../../api/movies';
+import { useFetch } from '../../hooks/useFetch';
 
 const MovieModal = () => {
   const { isOpen, content, type, closeModal } = useModalStore();
@@ -16,21 +17,15 @@ const MovieModal = () => {
   const { addMovie, removeMovie } = useMyListStore();
 
   const [isMuted, setIsMuted] = useState(true);
-  const [episodes, setEpisodes] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
   const Motion = motion.div;
 
   const isSeries = type === 'series';
 
-  useEffect(() => {
-    if (isOpen && content) {
-      if (isSeries) {
-        getEpisodes().then(data => setEpisodes(data || []));
-      } else {
-        getRecommendations().then(data => setRecommendations(data || []));
-      }
-    }
-  }, [isOpen, content, isSeries]);
+  const fetcher = useCallback(() => {
+    return isSeries ? getEpisodes() : getRecommendations();
+  }, [isSeries]);
+
+  const { fetchedData } = useFetch(fetcher, [], { enabled: isOpen && !!content });
 
   const handleToggleList = (e) => {
     e.stopPropagation();
@@ -124,7 +119,7 @@ const MovieModal = () => {
                         <span className="text-white/60 text-sm">Season 1</span>
                       </div>
                       <div className="space-y-4!">
-                        {episodes.map((ep) => (
+                        {fetchedData.map((ep) => (
                           <div key={ep.id} className="flex gap-4 p-4! hover:bg-[#22282A] rounded-lg transition-colors group cursor-pointer border-b border-gray-800 last:border-0">
                             <div className="text-2xl font-bold text-gray-500 self-center w-8">{ep.id}</div>
                             <div className="relative w-32 aspect-video flex-shrink-0 rounded overflow-hidden">
@@ -148,7 +143,7 @@ const MovieModal = () => {
                     <div className="mt-8!">
                       <h3 className="text-xl font-bold text-white mb-4!">Rekomendasi Serupa</h3>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {recommendations.map((rec) => (
+                        {fetchedData.map((rec) => (
                           <div key={rec.id} className="bg-[#22282A] rounded-lg overflow-hidden group cursor-pointer">
                             <div className="relative aspect-[2/3]">
                               <img src={rec.image} alt="Recommendation" className="w-full h-full object-cover" />

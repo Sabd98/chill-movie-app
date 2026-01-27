@@ -17,8 +17,6 @@ const Home = () => {
   });
 
   const handleMovieClick = (movie, orientation) => {
-    // Determine type based on orientation or section
-    // Horizontal usually means continuing/series in this context
     const type = orientation === 'horizontal' ? 'series' : 'movie';
     openModal(movie, type);
   };

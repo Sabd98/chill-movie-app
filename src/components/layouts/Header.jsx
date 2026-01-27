@@ -94,7 +94,7 @@ const Header = ({ onLogout }) => {
             </div>
             {isDropdownOpen && (
               <Portal>
-                <div 
+                <nav 
                   ref={dropdownRef}
                   className="dropdown show"
                   style={{
@@ -121,7 +121,7 @@ const Header = ({ onLogout }) => {
                   >
                     <LogOut size={16} /> Keluar
                   </a>
-                </div>
+                </nav>
               </Portal>
             )}
           </div>

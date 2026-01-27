@@ -16,7 +16,7 @@ const useAuthStore = create(
         try {
           const response = await loginUser({ username, password });
           const userData = response.data;
-          // Ensure user has subscription field if not present
+
           if (!userData.subscription) {
             userData.subscription = { status: 'inactive' };
           }
