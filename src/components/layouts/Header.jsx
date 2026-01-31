@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, User, Star, LogOut } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import '../../styles/header.css';
 import Portal from '../ui/Portal';
 
@@ -11,6 +12,7 @@ const Header = ({ onLogout }) => {
   const triggerRef = useRef(null);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -86,7 +88,7 @@ const Header = ({ onLogout }) => {
               onClick={handleToggleDropdown}
             >
               <img
-                src="/Ellipse 395.png"
+                src={user?.photoUrl || "/Ellipse 395.png"}
                 alt="Profile"
                 className="w-[35px] h-[35px] rounded-full mr-2! bg-white"
               />

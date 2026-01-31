@@ -1,23 +1,15 @@
 import { Outlet } from "react-router";
-import useMyListStore from "../../store/myListStore";
-import { useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import useAuthStore from "../../store/authStore";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/authSlice";
 
 const MainLayout = () => {
-  const { logout, isAuthenticated } = useAuthStore();
-  const { fetchMyList } = useMyListStore();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchMyList();
-    }
-  }, [isAuthenticated, fetchMyList]);
+  const dispatch = useDispatch();
 
   return (
     <>
-      <Header onLogout={logout} />
+      <Header onLogout={() => dispatch(logout())} />
       <Outlet />
       <Footer />
     </>

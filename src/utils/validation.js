@@ -13,3 +13,10 @@ export const registerSchema = z.object({
   message: "Password tidak cocok",
   path: ["confirmPassword"],
 });
+
+export const profileSchema = z.object({
+  username: z.string().min(1, 'Username harus diisi'),
+  password: z.string().optional().refine(val => !val || val.length >= 6, {
+    message: 'Password minimal 6 karakter jika diisi'
+  })
+});

@@ -3,27 +3,30 @@ import { useForm } from '../hooks/useForm';
 import { loginSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import useAuthStore from '../store/authStore';
+import { useLoginMutation } from '../services/authApi';
 import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading, error, clearError } = useAuthStore();
+  const [loginApi, { isLoading, error: apiError, reset: resetApi }] = useLoginMutation();
+  const authError = apiError?.data || apiError?.message;
   
   const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '' },
     loginSchema,
-    { externalError: error, clearError: clearError, formId: 'login' }
+    { externalError: authError, clearError: resetApi, formId: 'login' }
   );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = await login(values.username, values.password);
-      if (result.success) {
+      try {
+        await loginApi(values).unwrap();
         reset();
         navigate('/home');
+      } catch (err) {
+       console.error(err);
       }
     }
   };
@@ -64,8 +67,8 @@ const Login = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full" disabled={loading}>
-              {loading ? 'Masuk...' : 'Masuk'}
+            <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Masuk...' : 'Masuk'}
             </Button>
             <span className="auth-or-text text-white/70 text-[15px] block text-center">Atau</span>
             <Button 
@@ -77,7 +80,7 @@ const Login = () => {
               Masuk dengan Google
             </Button>
           </div>
-          {error && <div className="auth-error-message-bottom">{error}</div>}
+          {authError && <div className="auth-error-message-bottom">{authError}</div>}
         </form>
       </section>
     </main>

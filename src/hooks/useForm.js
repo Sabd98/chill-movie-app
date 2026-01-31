@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react';
-import useFormStore from '../store/formStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { initForm, setFieldValue, resetForm } from '../store/formSlice';
 
 export const useForm = (initialValues, validationSchema, options = {}) => {
   const { externalError, clearError, formId } = options;
-
-  const initForm = useFormStore((state) => state.initForm);
-  const setFieldValue = useFormStore((state) => state.setFieldValue);
-  const resetFormStore = useFormStore((state) => state.resetForm);
-  const storeFormState = useFormStore((state) => formId ? state.forms[formId] : null);
+  const dispatch = useDispatch();
+  
+  const storeFormState = useSelector((state) => 
+    formId ? state.form.forms[formId] : null
+  );
 
   const [localValues, setLocalValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (formId) {
-      initForm(formId, initialValues);
+      dispatch(initForm({ formId, initialValues }));
     }
-  }, [formId, initForm, initialValues]);
+  }, [formId, initialValues, dispatch]);
 
   const values = formId && storeFormState ? storeFormState.values : localValues;
 
@@ -24,7 +25,7 @@ export const useForm = (initialValues, validationSchema, options = {}) => {
     const { name, value } = e.target;
     
     if (formId) {
-      setFieldValue(formId, name, value);
+      dispatch(setFieldValue({ formId, field: name, value }));
     } else {
       setLocalValues(prev => ({ ...prev, [name]: value }));
     }
@@ -67,7 +68,7 @@ export const useForm = (initialValues, validationSchema, options = {}) => {
 
   const reset = () => {
     if (formId) {
-      resetFormStore(formId, initialValues);
+      dispatch(resetForm({ formId, initialValues }));
     } else {
       setLocalValues(initialValues);
     }

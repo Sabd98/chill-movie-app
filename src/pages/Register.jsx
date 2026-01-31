@@ -3,27 +3,30 @@ import { useForm } from '../hooks/useForm';
 import { registerSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import useAuthStore from '../store/authStore';
+import { useRegisterMutation } from '../services/authApi';
 import '../styles/auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register, loading, error, clearError } = useAuthStore();
+  const [registerApi, { isLoading, error: apiError, reset: resetApi }] = useRegisterMutation();
+  const authError = apiError?.data || apiError?.message;
   
   const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '', confirmPassword: '' },
     registerSchema,
-    { externalError: error, clearError: clearError, formId: 'register' }
+    { externalError: authError, clearError: resetApi, formId: 'register' }
   );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = await register(values.username, values.password);
-      if (result.success) {
+      try {
+        await registerApi(values).unwrap();
         reset();
         navigate('/');
+      } catch (err) {
+      console.error(err);
       }
     }
   };
@@ -73,8 +76,8 @@ const Register = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full" disabled={loading}>
-              {loading ? 'Mendaftar...' : 'Daftar'}
+            <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Mendaftar...' : 'Daftar'}
             </Button>
             <span className="auth-or-text">Atau</span>
             <Button 
@@ -86,7 +89,7 @@ const Register = () => {
               Daftar dengan Google
             </Button>
           </div>
-          {error && <div className="auth-error-message-bottom">{error}</div>}
+          {authError && <div className="auth-error-message-bottom">{authError}</div>}
         </form>
       </section>
     </main>

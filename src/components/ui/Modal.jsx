@@ -1,39 +1,55 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Plus, Volume2, VolumeX, Minus } from 'lucide-react';
-import useModalStore from '../../store/modalStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '../../store/modalSlice';
 import Button from './Button';
-import { useState, useCallback } from 'react';
-import useMyListStore from '../../store/myListStore';
+import { useState } from 'react';
 import Portal from './Portal';
-import { getEpisodes, getRecommendations } from '../../api/movies';
-import { useFetch } from '../../hooks/useFetch';
+import { useGetEpisodesQuery, useGetRecommendationsQuery } from '../../services/moviesApi';
+import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../services/userApi';
 
 const MovieModal = () => {
-  const { isOpen, content, type, closeModal } = useModalStore();
+  const dispatch = useDispatch();
+  const { isOpen, content, type } = useSelector((state) => state.modal);
+  const user = useSelector((state) => state.auth.user);
   const movieId = content?.id;
   const movie = content;
 
-  const inList = useMyListStore(state => state.myList.some(m => m.id === movieId));
-  const { addMovie, removeMovie } = useMyListStore();
+  const { data: myList = [] } = useGetMyListQuery(user?.username, {
+    skip: !user?.username
+  });
+  const inList = myList.some(m => m.id === movieId);
+  
+  const [addToMyList] = useAddToMyListMutation();
+  const [removeFromMyList] = useRemoveFromMyListMutation();
 
   const [isMuted, setIsMuted] = useState(true);
   const Motion = motion.div;
 
   const isSeries = type === 'series';
 
-  const fetcher = useCallback(() => {
-    return isSeries ? getEpisodes() : getRecommendations();
-  }, [isSeries]);
+  const { data: episodes = [] } = useGetEpisodesQuery(undefined, {
+    skip: !isOpen || !content || !isSeries
+  });
+  
+  const { data: recommendations = [] } = useGetRecommendationsQuery(undefined, {
+    skip: !isOpen || !content || isSeries
+  });
 
-  const { fetchedData } = useFetch(fetcher, [], { enabled: isOpen && !!content });
+  const fetchedData = isSeries ? episodes : recommendations;
 
   const handleToggleList = (e) => {
     e.stopPropagation();
+    if (!user) return;
     if (inList) {
-      removeMovie(movieId);
+      removeFromMyList({ username: user.username, movieId });
     } else {
-      addMovie({ ...movie, id: movieId });
+      addToMyList({ username: user.username, movie: { ...movie, id: movieId } });
     }
+  };
+
+  const handleClose = () => {
+    dispatch(closeModal());
   };
 
   return (
@@ -44,7 +60,7 @@ const MovieModal = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeModal}
+            onClick={handleClose}
             className="fixed inset-0 z-[2000] flex items-center justify-center p-4! bg-black/60 backdrop-blur-sm pointer-events-auto"
           >
             <Motion
@@ -57,7 +73,7 @@ const MovieModal = () => {
             >
               <Button 
                 variant="custom"
-                onClick={closeModal}
+                onClick={handleClose}
                 className="absolute top-4! right-4! z-50 p-2! bg-[#181818]/80 rounded-full hover:bg-[#22282A] transition-colors backdrop-blur-sm"
               >
                 <X className="w-6 h-6 text-white" />

@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, ThumbsUp, ChevronDown, Plus, Minus } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import useMyListStore from '../../store/myListStore';
+import { useSelector } from 'react-redux';
+import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../services/userApi';
 import Button from '../ui/Button';
 import Portal from '../ui/Portal';
 
@@ -13,9 +14,15 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
   const containerRef = useRef(null);
   const Motion = motion.div;
   const movieId = movie.id || movie.title;
+  const user = useSelector((state) => state.auth.user);
 
-  const inList = useMyListStore(state => state.myList.some(m => m.id === movieId));
-  const { addMovie, removeMovie } = useMyListStore();
+  const { data: myList = [] } = useGetMyListQuery(user?.username, {
+    skip: !user?.username
+  });
+  const inList = myList.some(m => m.id === movieId);
+  
+  const [addToMyList] = useAddToMyListMutation();
+  const [removeFromMyList] = useRemoveFromMyListMutation();
 
   const displayInfo = {
     match: movie.match || `${90 + (String(movieId).length % 10)}% Match`,
@@ -66,10 +73,11 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
 
   const handleToggleList = (e) => {
     e.stopPropagation();
+    if (!user) return;
     if (inList) {
-      removeMovie(movieId);
+      removeFromMyList({ username: user.username, movieId });
     } else {
-      addMovie({ ...movie, id: movieId });
+      addToMyList({ username: user.username, movie: { ...movie, id: movieId } });
     }
   };
 

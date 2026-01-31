@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import useMyListStore from '../store/myListStore';
+import { useSelector } from 'react-redux';
+import { useGetMyListQuery } from '../services/userApi';
 import MovieCard from '../components/home/MovieCard';
 
 const MyList = () => {
-  const { myList, loading, error, fetchMyList } = useMyListStore();
-
-  useEffect(() => {
-    fetchMyList();
-  }, [fetchMyList]);
+  const user = useSelector((state) => state.auth.user);
+  const { data: myList = [], isLoading: loading, error } = useGetMyListQuery(user?.username, {
+    skip: !user?.username,
+  });
 
   if (loading && myList.length === 0) {
     return (
@@ -23,7 +22,7 @@ const MyList = () => {
     return (
       <main className="pt-[100px]! min-h-screen bg-[#181a1c]">
         <div className="container mx-auto px-4! md:px-10! text-center py-40">
-          <p className="text-red-500 text-xl">{error}</p>
+          <p className="text-red-500 text-xl">Terjadi kesalahan memuat daftar.</p>
         </div>
       </main>
     );

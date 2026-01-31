@@ -1,26 +1,22 @@
-import {  useCallback } from "react";
 import { Check, Download, Monitor, Smartphone, X } from "lucide-react";
-import useAuthStore from "../store/authStore";
-import { getSubscriptionPlans } from "../api/subscription";
-import { useFetch } from "../hooks/useFetch";
+import { useSelector } from "react-redux";
+import { useGetSubscriptionPlansQuery, useSubscribeMutation } from "../services/userApi";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router";
 
 const Subscription = () => {
-  const { subscribe, loading } = useAuthStore();
+  const { loading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const fetchPlans = useCallback(async () => {
-    const response = await getSubscriptionPlans();
-    return response.data;
-  }, []);
-
-  const { fetchedData: plans, loading: isLoadingPlans, error } = useFetch(fetchPlans);
+  const { data: plans = [], isLoading: isLoadingPlans, error } = useGetSubscriptionPlansQuery();
+  const [subscribeApi] = useSubscribeMutation();
 
   const handleSubscribe = async (planId) => {
-    const result = await subscribe(planId);
-    if (result.success) {
-      navigate('/profile');
+    try {
+        await subscribeApi(planId).unwrap();
+        navigate('/profile');
+    } catch (err) {
+        console.error("Subscription failed", err);
     }
   };
 

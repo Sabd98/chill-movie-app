@@ -1,24 +1,26 @@
-import { useFetch } from "../hooks/useFetch";
 import Hero from "../components/home/Hero";
 import MovieSection from "../components/home/MovieSection";
 import MovieRow from "../components/home/MovieRow";
 import MovieModal from "../components/ui/Modal";
-import useModalStore from "../store/modalStore";
+import { useDispatch } from "react-redux";
+import { openModal } from "../store/modalSlice";
+import { useGetMoviesQuery } from "../services/moviesApi";
 import "../styles/content.css";
-import { getMovies } from "../api/movies";
 
 const Home = () => {
-  const { openModal } = useModalStore();
-  const { fetchedData, loading } = useFetch(getMovies, {
+  const dispatch = useDispatch();
+  const { data: movies, isLoading: loading } = useGetMoviesQuery();
+
+  const fetchedData = movies || {
     continuing: [],
     topRating: [],
     trending: [],
     newRelease: [],
-  });
+  };
 
   const handleMovieClick = (movie, orientation) => {
     const type = orientation === 'horizontal' ? 'series' : 'movie';
-    openModal(movie, type);
+    dispatch(openModal({ content: movie, type }));
   };
 
   return (

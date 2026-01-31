@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router';
+import { useSelector } from 'react-redux';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -8,10 +9,9 @@ import Subscription from './pages/Subscription';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
 import MainLayout from './components/layouts/MainLayout';
 import './App.css';
-import useAuthStore from './store/authStore';
 
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   return isAuthenticated ? <Navigate to="/home" replace /> : children;
 };
 
