@@ -9,6 +9,7 @@ import Subscription from './pages/Subscription';
 import ProtectedRoute from './components/layouts/ProtectedRoute';
 import MainLayout from './components/layouts/MainLayout';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
 
 const PublicRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -17,17 +18,31 @@ const PublicRoute = ({ children }) => {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
-      <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-      
-      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/my-list" element={<MyList />} />
-        <Route path="/subscription" element={<Subscription />} />
-      </Route>
-    </Routes>
+    <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <Routes>
+        <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        
+        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/my-list" element={<MyList />} />
+          <Route path="/subscription" element={<Subscription />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

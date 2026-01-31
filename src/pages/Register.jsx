@@ -21,13 +21,10 @@ const Register = () => {
     e.preventDefault();
     
     if (validate()) {
-      try {
         await registerApi(values).unwrap();
         reset();
         navigate('/');
-      } catch (err) {
-      console.error(err);
-      }
+    
     }
   };
 
@@ -89,7 +86,6 @@ const Register = () => {
               Daftar dengan Google
             </Button>
           </div>
-          {authError && <div className="auth-error-message-bottom">{authError}</div>}
         </form>
       </section>
     </main>

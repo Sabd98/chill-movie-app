@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import {
   AlertTriangle,
   FileText,
@@ -15,7 +16,6 @@ import { useForm } from "../hooks/useForm";
 import { profileSchema } from "../utils/validation";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
-import { useNavigate } from "react-router";
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -23,8 +23,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
-  const [updateMessage, setUpdateMessage] = useState({ type: "", text: "" });
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const [updateUserApi] = useUpdateUserMutation();
   const [unsubscribeApi] = useUnsubscribeMutation();
@@ -38,55 +36,22 @@ const Profile = () => {
     { formId: user ? `profile-${user.username}` : "profile-guest" },
   );
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        setUpdateMessage({ type: "error", text: "Ukuran file maksimal 2MB" });
-        return;
-      }
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     if (validate()) {
-      try {
-        const userData = {
-          username: values.username,
-          password: values.password,
-        };
-        if (selectedImage) {
-          userData.photoUrl = selectedImage;
-        }
+      const userData = {
+        username: values.username,
+        password: values.password,
+      };
 
-        await updateUserApi({
-          username: user.username,
-          userData,
-        }).unwrap();
+      await updateUserApi({
+        username: user.username,
+        userData,
+      }).unwrap();
 
-        setUpdateMessage({
-          type: "success",
-          text: "Profil berhasil diperbarui!",
-        });
-        setIsEditingUsername(false);
-        setIsEditingPassword(false);
-
-        setTimeout(() => setUpdateMessage({ type: "", text: "" }), 3000);
-      } catch (err) {
-        setUpdateMessage({
-          type: "error",
-          text: err.message || "Gagal memperbarui profil",
-        });
-      }
-    } else {
-      setUpdateMessage({ type: "error", text: "Mohon periksa inputan anda" });
+      setIsEditingUsername(false);
+      setIsEditingPassword(false);
     }
   };
 
@@ -103,7 +68,7 @@ const Profile = () => {
           <div className="profile-left">
             <div className="profile-pic-section mb-8!">
               <img
-                src={selectedImage || user?.photoUrl || "/Ellipse 395.png"}
+                src="/Ellipse 395.png"
                 alt="Profile"
                 className="profile-pic"
               />
@@ -114,7 +79,6 @@ const Profile = () => {
                   accept="image/*"
                   id="profile-upload"
                   className="hidden"
-                  onChange={handleImageChange}
                 />
                 <Button
                   variant="info"
@@ -197,14 +161,6 @@ const Profile = () => {
                   )}
                 </div>
               </div>
-
-              {updateMessage.text && (
-                <div
-                  className={`mb-4! p-3! rounded ${updateMessage.type === "success" ? "bg-green-500/20 text-green-500" : "bg-red-500/20 text-red-500"}`}
-                >
-                  {updateMessage.text}
-                </div>
-              )}
 
               <Button
                 type="submit"

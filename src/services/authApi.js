@@ -1,6 +1,7 @@
 import { api } from "./api";
 import { encryptPassword } from "../utils/crypto";
 import { setUser } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,7 +11,7 @@ export const authApi = api.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(setUser(data));
         } catch (err) {
-          console.error(err)
+          toast.error(err?.error?.data || "Login Gagal");
         }
       },
       queryFn: async (
@@ -52,6 +53,14 @@ export const authApi = api.injectEndpoints({
       },
     }),
     register: builder.mutation({
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          toast.success("Registrasi Berhasil");
+        } catch (err) {
+          toast.error(err?.error?.data || "Registrasi Gagal");
+        }
+      },
       queryFn: async (
         { username, password },
         _queryApi,

@@ -1,6 +1,7 @@
 import { api } from "./api";
 import { getSafeKey, encryptPassword } from "../utils/crypto";
 import { updateUserSubscription, updateUserProfile } from "../store/authSlice";
+import { toast } from "react-toastify";
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -30,6 +31,14 @@ export const userApi = api.injectEndpoints({
       providesTags: ["MyList"],
     }),
     addToMyList: builder.mutation({
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          toast.success("Berhasil ditambahkan ke Daftar Saya");
+        } catch (err) {
+          toast.error(err?.error?.data || "Gagal menambahkan ke Daftar Saya");
+        }
+      },
       query: ({ username, movie }) => ({
         url: `chill_my_list/${getSafeKey(username)}/${movie.id}.json`,
         method: "PUT",
@@ -38,6 +47,14 @@ export const userApi = api.injectEndpoints({
       invalidatesTags: ["MyList"],
     }),
     removeFromMyList: builder.mutation({
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          toast.success("Berhasil dihapus dari Daftar Saya");
+        } catch (err) {
+          toast.error(err?.error?.data || "Gagal menghapus dari Daftar Saya");
+        }
+      },
       query: ({ username, movieId }) => ({
         url: `chill_my_list/${getSafeKey(username)}/${movieId}.json`,
         method: "DELETE",
@@ -49,8 +66,9 @@ export const userApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateUserSubscription(data));
+           toast.success("Berhasil berlangganan");
         } catch (err) {
-          console.error(err);
+          toast.error(err?.error?.data || "Gagal berlangganan");
         }
       },
       queryFn: async (planId, { getState }, _extraOptions, baseQuery) => {
@@ -114,8 +132,9 @@ export const userApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateUserSubscription(data));
+          toast.success("Berhasil berhenti berlangganan");
         } catch (err) {
-          console.error(err);
+          toast.error(err?.error?.data || "Gagal berhenti berlangganan");
         }
       },
       queryFn: async (_, { getState }, _extraOptions, baseQuery) => {
@@ -162,8 +181,10 @@ export const userApi = api.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateUserProfile(data));
+          toast.success("Profil Berhasil Diperbarui");
         } catch (err) {
           console.error(err);
+          toast.error(err?.error?.data || "Gagal Memperbarui Profil");
         }
       },
       queryFn: async (
@@ -172,8 +193,6 @@ export const userApi = api.injectEndpoints({
         _extraOptions,
         baseQuery,
       ) => {
-        console.log("userApi: updateUser called", { oldUsername, userData });
-        try {
           const usersResult = await baseQuery("users.json");
           const usersMap = usersResult.data || {};
           const users = Object.entries(usersMap).map(([key, value]) => ({
@@ -201,8 +220,6 @@ export const userApi = api.injectEndpoints({
             updates.password = encryptPassword(userData.password);
           if (userData.photoUrl) updates.photoUrl = userData.photoUrl;
 
-          console.log("userApi: updates to apply", updates);
-
           const result = await baseQuery({
             url: `users/${targetUser.id}.json`,
             method: "PATCH",
@@ -210,16 +227,10 @@ export const userApi = api.injectEndpoints({
           });
 
           if (result.error) {
-             console.error("userApi: PATCH error", result.error);
-             return { error: result.error };
+            return { error: result.error };
           }
 
-          console.log("userApi: success", updates);
           return { data: updates };
-        } catch (error) {
-          console.error("userApi: exception", error);
-          return { error: { status: 500, data: error.message } };
-        }
       },
       invalidatesTags: ["User"],
     }),
