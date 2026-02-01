@@ -80,7 +80,6 @@ const Login = () => {
               Masuk dengan Google
             </Button>
           </div>
-          {authError && <div className="auth-error-message-bottom">{authError}</div>}
         </form>
       </section>
     </main>
