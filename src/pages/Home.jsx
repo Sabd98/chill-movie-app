@@ -4,7 +4,7 @@ import MovieRow from "../components/home/MovieRow";
 import MovieModal from "../components/ui/Modal";
 import { useDispatch } from "react-redux";
 import { openModal } from "../store/modalSlice";
-import { useGetMoviesQuery } from "../services/moviesApi";
+import { useGetMoviesQuery } from "../api/moviesApi";
 import "../styles/content.css";
 
 const Home = () => {

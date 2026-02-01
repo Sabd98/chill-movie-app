@@ -5,8 +5,8 @@ import { closeModal } from '../../store/modalSlice';
 import Button from './Button';
 import { useState } from 'react';
 import Portal from './Portal';
-import { useGetEpisodesQuery, useGetRecommendationsQuery } from '../../services/moviesApi';
-import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../services/userApi';
+import { useGetEpisodesQuery, useGetRecommendationsQuery } from '../../api/moviesApi';
+import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../api/userApi';
 
 const MovieModal = () => {
   const dispatch = useDispatch();

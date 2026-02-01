@@ -3,6 +3,7 @@ import MovieCard from './MovieCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { cn } from '../../utils/cn';
 
 const CustomPrevArrow = ({ onClick }) => (
   <button 
@@ -66,7 +67,9 @@ const MovieRow = ({ movies, onMovieClick, orientation = 'vertical' }) => {
   };
 
   return (
-    <div className={`relative movie-row-wrapper mx-8! movie-row-${orientation}`}>
+    <div className={cn(
+      "relative movie-row-wrapper mx-8! movie-row-" + orientation
+    )}>
       <Slider {...settings}>
         {movies.map((movie, index) => (
           <div key={index}>

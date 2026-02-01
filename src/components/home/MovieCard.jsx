@@ -2,9 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Play, ThumbsUp, ChevronDown, Plus, Minus } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../services/userApi';
+import { useGetMyListQuery, useAddToMyListMutation, useRemoveFromMyListMutation } from '../../api/userApi';
 import Button from '../ui/Button';
 import Portal from '../ui/Portal';
+import { cn } from '../../utils/cn';
 
 const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -88,11 +89,12 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
   };
 
   const renderBadge = () => movie.badge && (
-    <div className={`absolute top-2! left-2! px-2! py-1! rounded text-[10px] font-bold z-10 ${
+    <div className={cn(
+      "absolute top-2! left-2! px-2! py-1! rounded text-[10px] font-bold z-10",
       movie.badge.type === 'top' 
         ? 'bg-[#E11D48] text-white' 
         : 'bg-[#1E40AF] text-white'
-    }`}>
+    )}>
       {movie.badge.text}
     </div>
   );
@@ -101,17 +103,25 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
     <>
       <div 
         ref={containerRef}
-        className={`relative ${orientation === 'vertical' ? 'p-2!' : 'p-1!'}`}
+        className={cn(
+          "relative",
+          orientation === 'vertical' ? 'p-2!' : 'p-1!'
+        )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
       >
-        <div className={`${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'} w-full`} />
+        <div className={cn(
+          `${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'} w-full`
+        )} />
 
         <Motion 
-           className={`absolute top-0 left-0 w-full h-full cursor-pointer bg-[#181818] rounded-md overflow-hidden shadow-lg`}
+           className={"absolute top-0 left-0 w-full h-full cursor-pointer bg-[#181818] rounded-md overflow-hidden shadow-lg"}
         >
-          <div className={`relative w-full h-full ${orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'}`}>
+          <div className={cn(
+            "relative w-full h-full",
+            orientation === 'vertical' ? 'aspect-[2/3]' : 'aspect-video'
+          )}>
             {renderBadge()}
             <img 
               src={movie.image} 
@@ -144,7 +154,7 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
               <Motion
                 key="portal-card"
                 style={{ pointerEvents: 'auto' }}
-                className={`cursor-pointer bg-[#181818]/ rounded-md overflow-hidden shadow-lg origin-center`}
+                className="cursor-pointer bg-[#181818]/ rounded-md overflow-hidden shadow-lg origin-center"
                 initial={{ scale: 1 }}
                 animate={{ scale: 1.6, transition: { duration: 0.2 } }}
                 exit={{ scale: 1, opacity: 0, transition: { duration: 0.2 } }}
@@ -153,7 +163,7 @@ const MovieCard = ({ movie, orientation = 'vertical', onMovieClick }) => {
                 onMouseLeave={handleMouseLeave}
                 onClick={handleClick}
               >
-                <div className={`relative w-full aspect-video`}>
+                <div className="relative w-full aspect-video">
                   {renderBadge()}
                   <img 
                     src={movie.image} 

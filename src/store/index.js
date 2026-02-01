@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import modalReducer from './modalSlice';
 import formReducer from './formSlice';
-import { api } from '../services/api';
+import { api } from '../api/api';
 
 const store = configureStore({
   reducer: {

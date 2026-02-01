@@ -11,12 +11,13 @@ import { useSelector } from "react-redux";
 import {
   useUpdateUserMutation,
   useUnsubscribeMutation,
-} from "../services/userApi";
+} from "../api/userApi";
 import { useForm } from "../hooks/useForm";
 import { profileSchema } from "../utils/validation";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import "../styles/profile.css";
+import { cn } from "../utils/cn";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -107,7 +108,10 @@ const Profile = () => {
                     onChange={handleChange}
                     disabled={!isEditingUsername}
                     error={errors.username}
-                    className={`profile-input rounded-lg! bg-white/5! border! pr-[40px]! ${errors.username ? "" : "border-white/10!"}`}
+                    className={cn(
+                      "profile-input rounded-lg! bg-white/5! border! pr-[40px]!",
+                      errors.username ? "" : "border-white/10!",
+                    )}
                     containerClassName="mb-0!"
                   />
                   {isEditingUsername ? (
@@ -124,11 +128,6 @@ const Profile = () => {
                     />
                   )}
                 </div>
-                {errors.username && (
-                  <span className="text-red-500 text-xs mt-1!">
-                    {errors.username}
-                  </span>
-                )}
               </div>
 
               <div className="form-group mb-8!">
@@ -143,7 +142,10 @@ const Profile = () => {
                     disabled={!isEditingPassword}
                     error={errors.password}
                     showPasswordToggle={false}
-                    className={`profile-input rounded-lg! bg-white/5! border! pr-[40px]! ${errors.password ? "" : "border-white/10!"}`}
+                    className={cn(
+                      "profile-input rounded-lg! bg-white/5! border! pr-[40px]!",
+                      errors.password ? "" : "border-white/10!",
+                    )}
                     containerClassName="mb-0!"
                   />
                   {isEditingPassword ? (

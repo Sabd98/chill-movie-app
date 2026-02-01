@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '../../utils/cn';
 
 const Button = ({ 
   children, 
@@ -26,7 +26,7 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={clsx(baseStyles, variants[variant], className)}
+      className={cn(baseStyles, variants[variant], className)}
       {...props}
     >
       {icon && <span>{icon}</span>}

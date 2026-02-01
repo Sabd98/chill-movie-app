@@ -3,7 +3,7 @@ import { useForm } from '../hooks/useForm';
 import { loginSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useLoginMutation } from '../services/authApi';
+import { useLoginMutation } from '../api/authApi';
 import '../styles/auth.css';
 
 const Login = () => {

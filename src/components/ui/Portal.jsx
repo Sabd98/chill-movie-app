@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useState, useLayoutEffect } from 'react';
+import { cn } from '../../utils/cn';
 
 const Portal = ({ children, className = '' }) => {
   const [container, setContainer] = useState(null);
@@ -29,7 +30,7 @@ const Portal = ({ children, className = '' }) => {
   if (!container) return null;
 
   return createPortal(
-    <div className={`${className} relative z-auto pointer-events-auto`}>
+    <div className={cn(className, 'relative z-auto pointer-events-auto')}>
       {children}
     </div>, 
     container

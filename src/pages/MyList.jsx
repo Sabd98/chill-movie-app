@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useGetMyListQuery } from '../services/userApi';
+import { useGetMyListQuery } from '../api/userApi';
 import MovieCard from '../components/home/MovieCard';
 
 const MyList = () => {

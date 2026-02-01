@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import '../../styles/footer.css';
 import { genres, helpLinks } from '../../data/movies';
+import { cn } from '../../utils/cn';
 
 const FooterAccordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ const FooterAccordion = ({ title, children }) => {
           style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
         />
       </button>
-      <div className={`footer-accordion-content ${isOpen ? 'active' : ''}`}>
+      <div className={cn('footer-accordion-content', isOpen ? 'active' : '')}>
         {children}
       </div>
     </div>

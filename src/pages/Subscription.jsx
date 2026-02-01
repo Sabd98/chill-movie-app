@@ -1,6 +1,6 @@
 import { Check, Download, Monitor, Smartphone, X } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useGetSubscriptionPlansQuery, useSubscribeMutation } from "../services/userApi";
+import { useGetSubscriptionPlansQuery, useSubscribeMutation } from "../api/userApi";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router";
 

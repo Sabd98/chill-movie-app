@@ -3,7 +3,7 @@ import { useForm } from '../hooks/useForm';
 import { registerSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useRegisterMutation } from '../services/authApi';
+import { useRegisterMutation } from '../api/authApi';
 import '../styles/auth.css';
 
 const Register = () => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import '../../styles/header.css';
 import Portal from '../ui/Portal';
+import { cn } from "../../utils/cn";
 
 const Header = ({ onLogout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,7 +63,7 @@ const Header = ({ onLogout }) => {
   };
 
   return (
-    <header className={`header ${isScrolled ? "scrolled" : ""}`}>
+    <header className={cn('header', isScrolled ? 'scrolled' : '')}>
       <div className="container">
         <div className="nav">
           <nav className="flex items-center gap-20">
