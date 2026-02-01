@@ -198,7 +198,7 @@ const Profile = () => {
               </div>
             ) : (
               <div className="subscription-card active">
-                <div className="bg-[#2f3136] p-3! rounded-full h-fit">
+                <div className="bg-[#2f3136] p-3! rounded-full">
                   <Sparkles className="text-yellow-400" size={24} />
                 </div>
                 <div className="subscription-info flex-1">
@@ -214,16 +214,21 @@ const Profile = () => {
                   <p>Saat ini kamu sedang menggunakan akses akun premium</p>
                   <div className="flex justify-between items-center mt-2!">
                     <p className="text-xs text-blue-200 mb-0!">
-                      Berlaku hingga{" "}
-                      {new Date(user.subscription.endDate).toLocaleDateString(
+                      <h5>
+                        Berlaku hingga:
+                      </h5>
+                      <h5>
+                         {new Date(user.subscription.endDate).toLocaleDateString(
                         "id-ID",
                         { day: "numeric", month: "long", year: "numeric" },
                       )}
+                      </h5>
+                     
                     </p>
                     <Button
                       variant="info"
                       onClick={() => unsubscribeApi()}
-                      className="w-full rounded-xl py-3! text-[#ef4444] border-[#ef4444] hover:bg-[#ef4444] hover:text-white transition-all font-semibold"
+                      className="w-[15vh] rounded-xl py-6! text-[#ef4444] border-[#ef4444] hover:bg-[#ef4444] hover:text-white transition-all font-semibold"
                     >
                       Berhenti Berlangganan
                     </Button>

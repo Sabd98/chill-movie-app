@@ -111,6 +111,7 @@
   background: linear-gradient(90deg, #1f4287 0%, #2752aa 100%);
   position: relative;
   overflow: hidden;
+  align-items: flex-start;
 }
 
 .subscription-info h4 {

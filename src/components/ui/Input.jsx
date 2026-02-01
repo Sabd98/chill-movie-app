@@ -19,7 +19,7 @@ const Input = ({
   const inputType = isPassword && showPassword ? 'text' : type;
 
   return (
-    <div className={`field relative w-full mb-4 ${containerClassName}`}>
+    <div className={`field relative w-full ${containerClassName}`}>
       <input
         type={inputType}
         name={name}
@@ -27,7 +27,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        className={`w-full h-[50px] px-4 py-3 bg-[#333] border-2 rounded-full text-white text-base outline-none transition-colors duration-300 ${error ? '!border-[#ff4444] error' : 'border-[#444]'} ${className}`}
+        className={`w-full h-[50px] px-4! py-3! bg-[#333] border-2 rounded-full text-white text-base outline-none transition-colors duration-300 ${error ? '!border-[#ff4444] error' : 'border-[#444]'} ${className}`}
         {...props}
       />
       {isPassword && showPasswordToggle && (
