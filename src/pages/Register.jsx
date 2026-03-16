@@ -3,28 +3,28 @@ import { useForm } from '../hooks/useForm';
 import { registerSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useAuth } from '../hooks/useAuth';
+import { useRegisterMutation } from '../api/authApi';
 import '../styles/auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const [registerApi, { isLoading, error: apiError, reset: resetApi }] = useRegisterMutation();
+  const authError = apiError?.data || apiError?.message;
   
-  const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
+  const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '', confirmPassword: '' },
-    registerSchema
+    registerSchema,
+    { externalError: authError, clearError: resetApi, formId: 'register' }
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = register(values.username, values.password);
-      if (result.success) {
+        await registerApi(values).unwrap();
+        reset();
         navigate('/');
-      } else {
-        setErrors({ username: result.error });
-      }
+    
     }
   };
 
@@ -43,7 +43,6 @@ const Register = () => {
             placeholder="Masukkan Username"
             value={values.username}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.username}
           />
           <Input
@@ -52,7 +51,6 @@ const Register = () => {
             placeholder="Masukkan Kata Sandi"
             value={values.password}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.password}
             className="space"
           />
@@ -62,7 +60,6 @@ const Register = () => {
             placeholder="Konfirmasi Kata Sandi"
             value={values.confirmPassword}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.confirmPassword}
             className="space"
           />
@@ -76,8 +73,8 @@ const Register = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full">
-              Daftar
+            <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Mendaftar...' : 'Daftar'}
             </Button>
             <span className="auth-or-text">Atau</span>
             <Button 

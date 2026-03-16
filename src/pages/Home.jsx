@@ -1,46 +1,82 @@
-import { useAuth } from '../hooks/useAuth';
-import Header from '../components/Header';
-import Hero from '../components/Hero';
-import MovieSection from '../components/MovieSection';
-import MovieRow from '../components/MovieRow';
-import Footer from '../components/Footer';
-import { movieData } from '../data/movieData';
-import '../styles/content.css';
+import Hero from "../components/home/Hero";
+import MovieSection from "../components/home/MovieSection";
+import MovieRow from "../components/home/MovieRow";
+import MovieModal from "../components/ui/Modal";
+import { useDispatch } from "react-redux";
+import { openModal } from "../store/modalSlice";
+import { useGetMoviesQuery } from "../api/moviesApi";
+import "../styles/content.css";
 
 const Home = () => {
-  const { logout } = useAuth();
+  const dispatch = useDispatch();
+  const { data: movies, isLoading: loading } = useGetMoviesQuery();
 
-  const handleMovieClick = (movie) => {
-    alert(`Membuka detail untuk: ${movie.title}`);
+  const fetchedData = movies || {
+    continuing: [],
+    topRating: [],
+    trending: [],
+    newRelease: [],
+  };
+
+  const handleMovieClick = (movie, orientation) => {
+    const type = orientation === 'horizontal' ? 'series' : 'movie';
+    dispatch(openModal({ content: movie, type }));
   };
 
   return (
-    <>
-      <Header onLogout={logout} />
-      <main className="main-content">
-        <Hero />
-        <section className="content-sections">
-          <div className="container">
-            <MovieSection title="Melanjutkan Tonton Film" id="continuing-section">
-              <MovieRow movies={movieData.continuing} onMovieClick={handleMovieClick} />
-            </MovieSection>
-
-            <MovieSection title="Top Rating Film dan Series Hari ini">
-              <MovieRow movies={movieData.topRating} onMovieClick={handleMovieClick} />
-            </MovieSection>
-
-            <MovieSection title="Film Trending">
-              <MovieRow movies={movieData.trending} onMovieClick={handleMovieClick} />
-            </MovieSection>
-
-            <MovieSection title="Rilis Baru">
-              <MovieRow movies={movieData.newRelease} onMovieClick={handleMovieClick} />
-            </MovieSection>
+    <main className="main-content bg-[#181a1c]">
+      <Hero />
+      <MovieModal />
+      <div className="relative! z-10! -mt-20!">
+        {loading ? (
+          <div
+            className="container"
+            style={{ padding: "40px", textAlign: "center" }}
+          >
+            Loading movies...
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+        ) : (
+          <section className="content-sections">
+            <div className="container mx-auto px-4!">
+              <MovieSection
+                title="Melanjutkan Tonton Film"
+                id="continuing-section"
+              >
+                <MovieRow
+                  movies={fetchedData.continuing}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'horizontal')}
+                  orientation="horizontal"
+                />
+              </MovieSection>
+
+              <MovieSection title="Top Rating Film dan Series Hari ini">
+                <MovieRow
+                  movies={fetchedData.topRating}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
+                  orientation="vertical"
+                />
+              </MovieSection>
+
+              <MovieSection title="Film Trending">
+                <MovieRow
+                  movies={fetchedData.trending}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
+                  orientation="vertical"
+                />
+              </MovieSection>
+
+              <MovieSection title="Rilis Baru">
+                <MovieRow
+                  movies={fetchedData.newRelease}
+                  onMovieClick={(movie) => handleMovieClick(movie, 'vertical')}
+                  orientation="vertical"
+                />
+              </MovieSection>
+            </div>
+          </section>
+        )}
+      </div>
+    </main>
   );
 };
 

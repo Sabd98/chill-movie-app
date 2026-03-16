@@ -3,27 +3,30 @@ import { useForm } from '../hooks/useForm';
 import { loginSchema } from '../utils/validation';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { useAuth } from '../hooks/useAuth';
+import { useLoginMutation } from '../api/authApi';
 import '../styles/auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const [loginApi, { isLoading, error: apiError, reset: resetApi }] = useLoginMutation();
+  const authError = apiError?.data || apiError?.message;
   
-  const { values, errors, handleChange, handleBlur, validate, setErrors } = useForm(
+  const { values, errors, handleChange, validate, reset } = useForm(
     { username: '', password: '' },
-    loginSchema
+    loginSchema,
+    { externalError: authError, clearError: resetApi, formId: 'login' }
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validate()) {
-      const result = login(values.username, values.password);
-      if (result.success) {
+      try {
+        await loginApi(values).unwrap();
+        reset();
         navigate('/home');
-      } else {
-        setErrors({ username: result.error });
+      } catch (err) {
+       console.error(err);
       }
     }
   };
@@ -43,7 +46,6 @@ const Login = () => {
             placeholder="Masukkan Username"
             value={values.username}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.username}
           />
           <Input
@@ -52,7 +54,6 @@ const Login = () => {
             placeholder="Masukkan Kata Sandi"
             value={values.password}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.password}
             className="space"
           />
@@ -66,8 +67,8 @@ const Login = () => {
             <a href="#" className="text-white/70 no-underline hover:underline hover:text-white">Lupa Kata Sandi?</a>
           </div>
           <div className="auth-button-container">
-            <Button type="submit" variant="primary" className="w-full">
-              Masuk
+            <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Masuk...' : 'Masuk'}
             </Button>
             <span className="auth-or-text text-white/70 text-[15px] block text-center">Atau</span>
             <Button 
